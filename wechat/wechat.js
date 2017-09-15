@@ -1,4 +1,5 @@
 const axios = require('axios')
+const util = require('./util')
 
 const prefix = 'https://api.weixin.qq.com/cgi-bin/'
 const api = {
@@ -61,6 +62,15 @@ class Wechat {
       data.expires_in = expires_in
       return Promise.resolve(data)
     })
+  }
+
+  reply (ctx) {
+    const content = ctx.body
+    const message = ctx.weixin
+    const xml = util.tpl(content, message)
+    ctx.status = 200
+    ctx.type = 'application/xml'
+    ctx.body = xml
   }
 
 }

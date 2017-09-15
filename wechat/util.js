@@ -1,4 +1,5 @@
 const xml2js = require('xml2js')
+const tpl = require('./tpl')
 
 exports.parseXMLAsync = (xml) => {
   return new Promise((resolve, reject) => {
@@ -12,7 +13,7 @@ exports.parseXMLAsync = (xml) => {
   })
 }
 
-function formatMessage(result) {
+exports.formatMessage = (result) =>{
   let message = {}
   if (typeof result === 'object') {
     for (key in result) {
@@ -37,4 +38,22 @@ function formatMessage(result) {
   }
   return message
 }
-exports.formatMessage = formatMessage
+
+exports.tpl = (content, message) => {
+  const info = {}
+  let type = 'text'
+  const FromUserName = message.FromUserName
+  const ToUserName = message.ToUserName
+
+  if (Array.isArray(content)) {
+    type = 'news'
+  }
+  type = content.type || type
+  info.content = content
+  info.CreateTime = Date.now()
+  info.MsgType = type
+  info.ToUserName = FromUserName
+  info.FromUserName = ToUserName
+
+  return tpl.compiled(info)
+}

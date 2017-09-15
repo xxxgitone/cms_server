@@ -1,6 +1,6 @@
 const path = require('path')
-const util = require('../libs/util')
-const wechat_file = path.join(__dirname, './wechat.txt')
+const util = require('./libs/util')
+const wechat_file = path.join(__dirname, './config/wechat.txt')
 const config = {
   wechat: {
     appID: 'wxb37838238b63dfad',

@@ -1,10 +1,10 @@
 const sha1 = require('sha1')
 const getRawBody = require('raw-body')
-// const Wechat = require('./wechat')
+const Wechat = require('./wechat')
 const util = require('./util')
 
-module.exports = (opts) => {
-  // const wechat = new Wechat(opts)
+module.exports = (opts, handler) => {
+  const wechat = new Wechat(opts)
   return async (ctx, next) => {
     const token = opts.token
     const {
@@ -28,36 +28,27 @@ module.exports = (opts) => {
         ctx.body = 'wrong'
         return false
       }
-      // 接受POST请求过来的数据XML格式
+      // 接受用户POST请求过来的数据XML格式
       const data = await getRawBody(ctx.req, {
         length: ctx.length,
         limit: '1mb',
         encoding: ctx.charset
       })
 
+      // 解析成对象形式
       const content = await util.parseXMLAsync(data)
-      console.log(content)
 
+      // 上面解析过后值都是数组形式，继续转换成单个值形式
       const message = util.formatMessage(content.xml)
-      console.log(message)
 
-      if (message.MsgType === 'event') {
-        if (message.Event === 'subscribe') {
-          const now = +new Date()
-          ctx.status = 200
-          ctx.type = 'application/xml'
-          ctx.body = `
-            <xml>
-              <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
-              <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
-              <CreateTime>${now}</CreateTime>
-              <MsgType><![CDATA[text]]></MsgType>
-              <Content><![CDATA[欢迎订阅～]]></Content>
-            </xml>
-          `
-          return
-        }
-      }
+      // 将解析出来的内容挂载到ctx上
+      ctx.weixin = message
+      
+      // 业务逻辑转换到另外一个中间件，就是传入的weixin.reply
+      await handler(ctx, next)
+
+      // 当上面await处理完后，执行，回复
+      wechat.reply(ctx)
     }
   }
 }
