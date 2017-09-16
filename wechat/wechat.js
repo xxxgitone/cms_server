@@ -33,6 +33,9 @@ const api = {
     fetch: prefix + 'user/info?',
     batchFetch: prefix + 'user/info/batchget?',
     list: prefix + 'user/get?'
+  },
+  mass: {
+    tag: prefix + 'message/mass/sendall?'
   }
 }
 
@@ -569,6 +572,47 @@ class Wechat {
         })
     })
   }
+
+  // sendByTag (type, message, tagId) {
+  //   let msg = {
+  //     filter: {},
+  //     msgtype: type,
+  //     send_ignore_reprint: 0
+  //   }
+  //   msg[type] = message
+
+  //   if (!tagId) {
+  //     msg.filter.is_to_all = true
+  //   } else {
+  //     msg.filter = {
+  //       is_to_all: false,
+  //       tag_id: tagId
+  //     }
+  //   }
+
+  //   return new Promise((resolve, reject) => {
+  //     this.fetchAccessToken()
+  //       .then((data) => {
+  //         let url = `${api.mass.tag}access_token=${data.access_token}`
+
+  //         request({
+  //           method: 'POST',
+  //           url: url,
+  //           body: msg,
+  //           json: true
+  //         }).then((res) => {
+  //           const _data = res.body
+  //           if (_data) {
+  //             resolve(_data)
+  //           } else {
+  //             throw new Error('send by tag fails')
+  //           }
+  //         }).catch((err) => {
+  //           reject(err)
+  //         })
+  //       })
+  //   })
+  // }
 
 }
 

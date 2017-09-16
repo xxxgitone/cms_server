@@ -51,12 +51,14 @@ exports.reply = async (ctx, next) => {
       }
     } else if (content === '6') {
       const data = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg', {type: 'image'})
+      console.log(data)
       reply = {
         type: 'image',
         Media_id: data.media_id
       }
     } else if (content === '7') {
       const picData = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg', {})
+      console.log(picData)
 
       let media = {
         articles: [{
@@ -140,6 +142,13 @@ exports.reply = async (ctx, next) => {
       const userList = await wechatApi.listUsers()
       console.log(userList)
       reply = userList.total
+    } else if (content === '12') {
+      // const mpnews = {
+      //   media_id: 'TM1UUnceeDG6AGP6pnrgECY_IY2VCe--iccsZ_6wxns'
+      // }
+      // const msgData = await wechatApi.sendByTag('mpnews', mpnews)
+      // console.log(msgData)
+      // reply = 'Yeah'
     }
 
     ctx.body = reply
