@@ -1,9 +1,12 @@
+const config = require('./config')
+const Wechat = require('./wechat/wechat')
+const wechatApi = new Wechat(config.wechat)
+
 /**
  * 根据用户的请求信息，返回相应的内容
  */
 exports.reply = async (ctx, next) => {
   const message = ctx.weixin
-  console.log(2)
   if (message.MsgType === 'event') {
     if (message.Event === 'subscribe') {
       if (message.EventKey) {
@@ -40,6 +43,12 @@ exports.reply = async (ctx, next) => {
         PicUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505490329240&di=92852ad01eb3da50aa52aa3cb2de7d7c&imgtype=0&src=http%3A%2F%2Fwww.embeddedlinux.org.cn%2Fuploads%2Fallimg%2F151115%2F0934120.jpg',
         Url: 'https://github.com/xxxgitone'
       }]
+    } else if (content === '5') {
+      const data = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg')
+      reply = {
+        type: 'image',
+        Media_id: data.media_id
+      }
     }
 
     ctx.body = reply
