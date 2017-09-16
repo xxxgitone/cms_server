@@ -31,7 +31,8 @@ const api = {
     // 用户备注名
     remark: prefix + 'user/info/updateremark?',
     fetch: prefix + 'user/info?',
-    batchFetch: prefix + 'user/info/batchget?'
+    batchFetch: prefix + 'user/info/batchget?',
+    list: prefix + 'user/get?'
   }
 }
 
@@ -476,6 +477,99 @@ class Wechat {
         })
     })
   }
+
+  // 备注
+  remarkUser (openId, remark) {
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.user.remark}access_token=${data.access_token}`
+
+          let form = {
+            openid: openId,
+            remark: remark
+          }
+
+          request({
+            method: 'POST',
+            url: url,
+            body: form,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('remark user fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  // 获取用户信息
+  fetchUsers (openIds, lang) {
+    lang = lang || 'zh_CN'
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let options = {
+            json: true
+          }
+          if (Array.isArray(openIds)) {
+            options.url = `${api.user.batchFetch}access_token=${data.access_token}`
+            options.body = {
+              user_list: openIds
+            }
+            options.method = 'POST'
+          } else {
+            options.url = `${api.user.fetch}access_token=${data.access_token}&openid=${openIds}&lang=${lang}`
+          }
+
+          request(options).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('fetch fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  // 用户列表
+  listUsers (openId) {
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.user.list}access_token=${data.access_token}`
+
+          if (openId) {
+            url += `&next_openid=${openId}`
+          }
+
+          request({
+            url: url,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('list users fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
 }
 
 module.exports = Wechat

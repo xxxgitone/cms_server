@@ -120,6 +120,26 @@ exports.reply = async (ctx, next) => {
       console.log(tags)
 
       reply = '分组'
+    } else if (content === '10') {
+      const user = await wechatApi.fetchUsers(message.FromUserName)
+      console.log(user)
+
+      const openIds = [
+        {
+          openid: message.FromUserName, 
+          lang: 'en'
+        }
+      ]
+
+      const users = await wechatApi.fetchUsers(openIds)
+
+      console.log(users)
+
+      reply = JSON.stringify(user)
+    } else if (content === '11') {
+      const userList = await wechatApi.listUsers()
+      console.log(userList)
+      reply = userList.total
     }
 
     ctx.body = reply
