@@ -111,7 +111,15 @@ exports.reply = async (ctx, next) => {
       console.log(list)
       console.log(list2)
 
-      reply = 1
+      reply = '素材'
+    } else if (content === '9') {
+      const tag = await wechatApi.createTags('wechat')
+      console.log('新分组')
+
+      const tags = await wechatApi.fetchTags()
+      console.log(tags)
+
+      reply = '分组'
     }
 
     ctx.body = reply

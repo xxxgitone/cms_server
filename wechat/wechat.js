@@ -19,6 +19,19 @@ const api = {
     update: prefix + 'material/update_news?',
     count: prefix + 'material/get_materialcount?',
     batch: prefix + 'material/batchget_material?'
+  },
+  tags: {
+    create: prefix + 'tags/create?',
+    fetch: prefix + 'tags/get?',
+    update: prefix + 'tags/update?',
+    delete: prefix + 'tags/delete?',
+    check: prefix + 'user/tag/get?'
+  },
+  user: {
+    // 用户备注名
+    remark: prefix + 'user/info/updateremark?',
+    fetch: prefix + 'user/info?',
+    batchFetch: prefix + 'user/info/batchget?'
   }
 }
 
@@ -344,7 +357,125 @@ class Wechat {
     })
   }
 
+  createTags (name) {
 
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.tags.create}access_token=${data.access_token}`
+
+          let form = {
+            tag: {
+              name: name
+            }
+          }
+
+          request({
+            method: 'POST',
+            url: url,
+            body: form,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('create tag fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  fetchTags (name) {
+    
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.tags.fetch}access_token=${data.access_token}`
+
+          request({
+            method: 'GET',
+            url: url,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('fetch tag fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  checkTags (tagId) {
+    
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.tags.check}access_token=${data.access_token}`
+
+          let form = {
+            tagid: tagId
+          }
+
+          request({
+            method: 'POST',
+            url: url,
+            body: form,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('check tag fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  updateTags (id, name) {
+    
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.tags.update}access_token=${data.access_token}`
+
+          let form = {
+            tag: {
+              id: id,
+              name: name
+            }
+          }
+
+          request({
+            method: 'POST',
+            url: url,
+            body: form,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('update tag fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
 }
 
 module.exports = Wechat
