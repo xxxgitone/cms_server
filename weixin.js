@@ -49,6 +49,69 @@ exports.reply = async (ctx, next) => {
         type: 'image',
         Media_id: data.media_id
       }
+    } else if (content === '6') {
+      const data = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg', {type: 'image'})
+      reply = {
+        type: 'image',
+        Media_id: data.media_id
+      }
+    } else if (content === '7') {
+      const picData = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg', {})
+
+      let media = {
+        articles: [{
+          title: 'GITHUB',
+          thumb_media_id: picData.media_id,
+          author: 'xuthus',
+          digest: '简单摘要',
+          show_cover_pic: 1,
+          content: '全球最大的同性交友网站',
+          content_source_url: 'https://github.com/xxxgitone'
+        },{
+          title: 'GITHUB1',
+          thumb_media_id: picData.media_id,
+          author: 'xuthus',
+          digest: '简单摘要',
+          show_cover_pic: 1,
+          content: '全球最大的同性交友网站',
+          content_source_url: 'https://github.com/xxxgitone'
+        }]
+      }
+      
+      data = await wechatApi.uploadMaterial('news', media, {})
+      data = await wechatApi.fetchMaterial(data.media_id, 'news', {})
+      console.log(data)
+
+      const items = data.news_item
+      let news = []
+
+      items.forEach((item) => {
+        news.push({
+          Title: item.title,
+          Description: item.content,
+          PicUrl: picData.url,
+          Url: item.url
+        })
+      })
+      reply = news
+    } else if (content === '8') {
+      const counts = await wechatApi.countMaterial()
+      console.log(JSON.stringify(counts))
+
+      const list = await wechatApi.batchMaterial({
+        type: 'image',
+        offset: 0,
+        count: 10,
+      })
+      const list2 = await wechatApi.batchMaterial({
+        type: 'news',
+        offset: 0,
+        count: 10,
+      })
+      console.log(list)
+      console.log(list2)
+
+      reply = 1
     }
 
     ctx.body = reply
