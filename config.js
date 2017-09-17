@@ -1,6 +1,7 @@
 const path = require('path')
 const util = require('./libs/util')
 const wechat_file = path.join(__dirname, './config/wechat.txt')
+const wechat_ticket_file = path.join(__dirname, './config/wechat_ticket.txt')
 const config = {
   wechat: {
     appID: 'wxb37838238b63dfad',
@@ -12,6 +13,13 @@ const config = {
     saveAccessToken: (data) => {
       data = JSON.stringify(data)
       return util.writeFileAsync(wechat_file, data)
+    },
+    getTicket: () => {
+      return util.readFileAsync(wechat_ticket_file)
+    },
+    saveTicket: (data) => {
+      data = JSON.stringify(data)
+      return util.writeFileAsync(wechat_ticket_file, data)
     }
   }
 }

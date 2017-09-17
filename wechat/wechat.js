@@ -42,6 +42,10 @@ const api = {
     create: prefix + 'menu/create?',
     get: prefix + 'menu/get?',
     del: prefix + 'menu/delete?'
+  },
+  // JS-SDK票据
+  ticket: {
+    get: prefix + 'ticket/getticket?'
   }
 }
 
@@ -51,6 +55,8 @@ class Wechat {
     this.appSecret = opts.appsecret
     this.getAccessToken = opts.getAccessToken
     this.saveAccessToken = opts.saveAccessToken
+    this.getTicket = opts.getTicket
+    this.saveTicket = opts.saveTicket
     this.fetchAccessToken()
   }
 
@@ -76,12 +82,11 @@ class Wechat {
         }
       })
       .then((data) => {
-        this.access_token = data.access_token
-        this.expires_in = data.access_token
         this.saveAccessToken(data)
         return Promise.resolve(data)
       })
   }
+
 
   // 验证票据
   isValidAccessTooken (data) {
@@ -116,6 +121,59 @@ class Wechat {
           resolve(data)
       })
     })
+  }
+
+  // jsapi_ticket
+  fetchTicket (access_token) {
+    return this.getTicket()
+      .then((data) => {
+        try {
+          data = JSON.parse(data)
+        } catch(e) {
+          return this.updateTicket(access_token)
+        }
+
+        if (this.isValidTicket(data)) {
+          return Promise.resolve(data)
+        } else {
+          return this.updateTicket(access_token)
+        }
+      })
+      .then((data) => {
+        this.saveTicket(data)
+        return Promise.resolve(data)
+      })
+  }
+
+  updateTicket (access_token) {
+    const url = api.ticket.get + '&access_token=' + access_token + '&type=jsapi'
+
+    return new Promise(function(resolve, reject) {
+      request({url: url, json: true}).then(function(response) {
+          let data = response.body
+          const now = Date.now()
+          //提前20s
+          let expires_in = now + (data.expires_in - 20) * 1000
+
+          data.expires_in = expires_in
+          resolve(data)
+      })
+    })
+  }
+
+  isValidTicket (data) {
+    if (!data || !data.ticket || !data.expires_in) {
+      return false
+    }
+    const ticket = data.ticket
+    const expires_in = data.expires_in
+    const now = Date.now()
+
+    if (now < expires_in) {
+      return true
+    } else {
+      return false
+    }
   }
 
   reply (ctx) {

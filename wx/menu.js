@@ -11,7 +11,7 @@ module.exports = {
         {
           type: 'view',
           name: '跳转URL',
-          url: 'http://github.com/xxxgiton'
+          url: 'http://wechat.xxxuthus.cn:3100/movie'
         },
         {
           type: 'scancode_push',
