@@ -35,7 +35,13 @@ const api = {
     list: prefix + 'user/get?'
   },
   mass: {
-    tag: prefix + 'message/mass/sendall?'
+    tag: prefix + 'message/mass/sendall?',
+    openId: prefix + 'message/mass/send?'
+  },
+  menu: {
+    create: prefix + 'menu/create?',
+    get: prefix + 'menu/get?',
+    del: prefix + 'menu/delete?'
   }
 }
 
@@ -113,7 +119,8 @@ class Wechat {
   }
 
   reply (ctx) {
-    const content = ctx.body
+    console.log('wechat reply body ' + ctx.body)
+    const content = ctx.body || 'Empty'
     const message = ctx.weixin
     const xml = util.tpl(content, message)
     ctx.status = 200
@@ -573,46 +580,128 @@ class Wechat {
     })
   }
 
-  // sendByTag (type, message, tagId) {
-  //   let msg = {
-  //     filter: {},
-  //     msgtype: type,
-  //     send_ignore_reprint: 0
-  //   }
-  //   msg[type] = message
+  sendByTag (type, message, tagId) {
+    let msg = {
+      filter: {},
+      msgtype: type
+    }
+    msg[type] = message
 
-  //   if (!tagId) {
-  //     msg.filter.is_to_all = true
-  //   } else {
-  //     msg.filter = {
-  //       is_to_all: false,
-  //       tag_id: tagId
-  //     }
-  //   }
+    if (!tagId) {
+      msg.filter.is_to_all = true
+    } else {
+      msg.filter = {
+        is_to_all: false,
+        tag_id: tagId
+      }
+    }
 
-  //   return new Promise((resolve, reject) => {
-  //     this.fetchAccessToken()
-  //       .then((data) => {
-  //         let url = `${api.mass.tag}access_token=${data.access_token}`
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.mass.tag}access_token=${data.access_token}`
 
-  //         request({
-  //           method: 'POST',
-  //           url: url,
-  //           body: msg,
-  //           json: true
-  //         }).then((res) => {
-  //           const _data = res.body
-  //           if (_data) {
-  //             resolve(_data)
-  //           } else {
-  //             throw new Error('send by tag fails')
-  //           }
-  //         }).catch((err) => {
-  //           reject(err)
-  //         })
-  //       })
-  //   })
-  // }
+          request({
+            method: 'POST',
+            url: url,
+            body: msg,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('send by tag fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  sendByOpenId (type, message, openIds) {
+    let msg = {
+      msgtype: type,
+      touser: openIds
+    }
+
+    msg[type] = message
+
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.mass.openId}access_token=${data.access_token}`
+
+          request({
+            method: 'POST',
+            url: url,
+            body: msg,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('send by openid fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  createMenu (menu) {
+
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.menu.create}access_token=${data.access_token}`
+
+          request({
+            method: 'POST',
+            url: url,
+            body: menu,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('create menu fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
+
+  deleteMenu () {
+    
+    return new Promise((resolve, reject) => {
+      this.fetchAccessToken()
+        .then((data) => {
+          let url = `${api.menu.del}access_token=${data.access_token}`
+
+          request({
+            method: 'GET',
+            url: url,
+            json: true
+          }).then((res) => {
+            const _data = res.body
+            if (_data) {
+              resolve(_data)
+            } else {
+              throw new Error('delete menu fails')
+            }
+          }).catch((err) => {
+            reject(err)
+          })
+        })
+    })
+  }
 
 }
 

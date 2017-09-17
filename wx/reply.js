@@ -1,6 +1,14 @@
-const config = require('./config')
-const Wechat = require('./wechat/wechat')
+const config = require('../config')
+const Wechat = require('../wechat/wechat')
+const path = require('path')
+const menu = require('./menu')
 const wechatApi = new Wechat(config.wechat)
+
+wechatApi.deleteMenu().then(() => {
+  return wechatApi.createMenu(menu)
+}).then((msg) => {
+  console.log(msg)
+})
 
 /**
  * 根据用户的请求信息，返回相应的内容
@@ -25,7 +33,34 @@ exports.reply = async (ctx, next) => {
       ctx.body = '看到你扫了一下哦'
     } else if (message.Event === 'VIEW') {
       ctx.body = `您点击的链接: ${message.EventKey}`
-    }
+    } else if (message.Event === 'scancode_push') {
+      console.log(message.ScanCodeInfo.ScanType)
+      console.log(message.ScanResult)
+      ctx.body = `您点击了菜单: ${message.EventKey}`
+    } else if (message.Event === 'scancode_waitmsg') {
+      console.log(message.ScanCodeInfo.ScanType)
+      console.log(message.ScanResult.ScanResult)
+      ctx.body = `您点击了菜单: ${message.EventKey}`
+    } else if (message.Event === 'pic_sysphoto') {
+      console.log(message.SendPicsInfo.PicList)
+      console.log(message.SendPicsInfo.Count)
+      ctx.body = `您点击了菜单: ${message.EventKey}`
+    } else if (message.Event === 'pic_photo_or_album') {
+      console.log(message.SendPicsInfo.PicList)
+      console.log(message.SendPicsInfo.Count)
+      ctx.body = `您点击了菜单: ${message.EventKey}`
+    } else if (message.Event === 'pic_weixin') {
+      ctx.body = `您点击了菜单: ${message.EventKey}`
+      console.log(message.SendPicsInfo.PicList)
+      console.log(message.SendPicsInfo.Count)
+    } else if (message.Event === 'location_select') {
+      ctx.body = `您点击了菜单: ${message.EventKey}`
+      console.log(message.SendLocationInfo.Location_X)
+      console.log(message.SendLocationInfo.Location_Y)
+      console.log(message.SendLocationInfo.Scale)
+      console.log(message.SendLocationInfo.Label)
+      console.log(message.SendLocationInfo.Poiname)
+    } 
   } else if (message.MsgType === 'text'){
     const content = message.Content
     let reply = `您的话是: ${message.Content}`
@@ -44,20 +79,20 @@ exports.reply = async (ctx, next) => {
         Url: 'https://github.com/xxxgitone'
       }]
     } else if (content === '5') {
-      const data = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg')
+      const data = await wechatApi.uploadMaterial('image', path.join(__dirname, '../2.jpg'))
       reply = {
         type: 'image',
         Media_id: data.media_id
       }
     } else if (content === '6') {
-      const data = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg', {type: 'image'})
+      const data = await wechatApi.uploadMaterial('image', path.join(__dirname, '../2.jpg'), {type: 'image'})
       console.log(data)
       reply = {
         type: 'image',
         Media_id: data.media_id
       }
     } else if (content === '7') {
-      const picData = await wechatApi.uploadMaterial('image', __dirname + '/2.jpg', {})
+      const picData = await wechatApi.uploadMaterial('image', path.join( __dirname, '../2.jpg'), {})
       console.log(picData)
 
       let media = {
@@ -81,6 +116,7 @@ exports.reply = async (ctx, next) => {
       }
       
       data = await wechatApi.uploadMaterial('news', media, {})
+      console.log(data)
       data = await wechatApi.fetchMaterial(data.media_id, 'news', {})
       console.log(data)
 
@@ -143,12 +179,12 @@ exports.reply = async (ctx, next) => {
       console.log(userList)
       reply = userList.total
     } else if (content === '12') {
-      // const mpnews = {
-      //   media_id: 'TM1UUnceeDG6AGP6pnrgECY_IY2VCe--iccsZ_6wxns'
-      // }
-      // const msgData = await wechatApi.sendByTag('mpnews', mpnews)
-      // console.log(msgData)
-      // reply = 'Yeah'
+      const mpnews = {
+        media_id: 'TM1UUnceeDG6AGP6pnrgEM9jxhvgu6VQCjkShMiNzIs'
+      }
+      const msgData = await wechatApi.sendByTag('mpnews', mpnews)
+      console.log(msgData)
+      reply = 'Yeah'
     }
 
     ctx.body = reply

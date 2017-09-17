@@ -13,7 +13,7 @@ exports.parseXMLAsync = (xml) => {
   })
 }
 
-exports.formatMessage = (result) =>{
+function formatMessage (result) {
   let message = {}
   if (typeof result === 'object') {
     for (key in result) {
@@ -39,7 +39,10 @@ exports.formatMessage = (result) =>{
   return message
 }
 
+exports.formatMessage = formatMessage
+
 exports.tpl = (content, message) => {
+  console.log('content' + content)
   const info = {}
   let type = 'text'
   const FromUserName = message.FromUserName
@@ -48,7 +51,8 @@ exports.tpl = (content, message) => {
   if (Array.isArray(content)) {
     type = 'news'
   }
-  type = content.type || type
+
+  type = content && content.type || type
   info.content = content
   info.CreateTime = Date.now()
   info.MsgType = type

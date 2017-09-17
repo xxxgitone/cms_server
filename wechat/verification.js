@@ -40,6 +40,7 @@ module.exports = (opts, handler) => {
 
       // 上面解析过后值都是数组形式，继续转换成单个值形式
       const message = util.formatMessage(content.xml)
+      console.log(message)
 
       // 将解析出来的内容挂载到ctx上
       ctx.weixin = message
