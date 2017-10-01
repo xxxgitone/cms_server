@@ -21,6 +21,7 @@ module.exports = (opts, handler) => {
       if (sha === signature) {
         ctx.body = echostr + ''
       } else {
+        console.log('wrong')
         ctx.body = 'wrong'
       }
     } else if (ctx.method === 'POST') {

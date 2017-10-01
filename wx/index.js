@@ -1,7 +1,8 @@
 const path = require('path')
-const util = require('./libs/util')
-const wechat_file = path.join(__dirname, './config/wechat.txt')
-const wechat_ticket_file = path.join(__dirname, './config/wechat_ticket.txt')
+const util = require('../libs/util')
+const Wechat = require('../wechat/wechat')
+const wechat_file = path.join(__dirname, '../config/wechat.txt')
+const wechat_ticket_file = path.join(__dirname, '../config/wechat_ticket.txt')
 const config = {
   wechat: {
     appID: 'wxb37838238b63dfad',
@@ -24,4 +25,8 @@ const config = {
   }
 }
 
-module.exports = config
+exports.wechatOptions = config
+
+exports.getWechat = function () {
+  return new Wechat(config.wechat)
+}

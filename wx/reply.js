@@ -1,14 +1,6 @@
-const config = require('../config')
-const Wechat = require('../wechat/wechat')
 const path = require('path')
-const menu = require('./menu')
-const wechatApi = new Wechat(config.wechat)
-
-wechatApi.deleteMenu().then(() => {
-  return wechatApi.createMenu(menu)
-}).then((msg) => {
-  console.log(msg)
-})
+const wx = require('./index')
+const wechatApi = wx.getWechat()
 
 /**
  * 根据用户的请求信息，返回相应的内容
