@@ -15,7 +15,6 @@ module.exports = (opts, handler) => {
     } = ctx.request.query
     const str = [token, timestamp, nonce].sort().join('')
     const sha = sha1(str)
-    
     // 微信第一次通过get请求验证身份
     if (ctx.method === 'GET') {
       if (sha === signature) {
