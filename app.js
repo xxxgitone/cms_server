@@ -2,25 +2,25 @@ const Koa = require('koa')
 const json = require('koa-json')
 const logger = require('koa-logger')
 const bodyParser = require('koa-bodyparser')
-// const config = require('./app/config/config')
+const config = require('./app/config/config')
 const router = require('koa-router')()
-// const mongoose = require('mongoose')
-// const userRoutes = require('./app/router/user')
-// const teacherRoutes = require('./app/router/teacher')
-// const campusRoutes = require('./app/router/campus')
-// const courseRoutes = require('./app/router/course')
-// const studentRoutes = require('./app/router/student')
-// const orderRoutes = require('./app/router/order')
+const mongoose = require('mongoose')
+const userRoutes = require('./app/router/user')
+const teacherRoutes = require('./app/router/teacher')
+const campusRoutes = require('./app/router/campus')
+const courseRoutes = require('./app/router/course')
+const studentRoutes = require('./app/router/student')
+const orderRoutes = require('./app/router/order')
 // const axios = require('axios')
 // const Order = require('./server/models/order')
 
 const PORT = process.env.PORT || '3100'
 const ENV = process.env.NODE_ENV || 'development'
 
-// if (ENV === 'development') {
-//   mongoose.connect(config.mongo.dev.connectionUrl)
-// }
-// mongoose.Promise = global.Promise
+if (ENV === 'development') {
+  mongoose.connect(config.mongo.dev.connectionUrl)
+}
+mongoose.Promise = global.Promise
 
 const app = new Koa()
 
@@ -57,24 +57,23 @@ router.get('/movie', game.movie)
 router.get('/wx', wechat.hear)
 router.post('/wx', wechat.hear)
 
-
 // app.use(require('./app/middlewares/jwtMiddle'))
-// router.use('/api', userRoutes.routes())
-// router.use('/api', teacherRoutes.routes())
-// router.use('/api', campusRoutes.routes())
-// router.use('/api', courseRoutes.routes())
-// router.use('/api', studentRoutes.routes())
-// router.use('/api', orderRoutes.routes())
+router.use('/api', userRoutes.routes())
+router.use('/api', teacherRoutes.routes())
+router.use('/api', campusRoutes.routes())
+router.use('/api', courseRoutes.routes())
+router.use('/api', studentRoutes.routes())
+router.use('/api', orderRoutes.routes())
+
+app
+  .use(router.routes())
+  .use(router.allowedMethods())
 
 // axios.get('https://www.easy-mock.com/mock/59c35a9fe0dc663341b2ec0c/api/order').then((res) => {
 //   res.data.data.forEach(item => {
 //     Order.create(item)
 //   })
 // })
-
-app
-.use(router.routes())
-.use(router.allowedMethods())
 
 
 module.exports = app.listen(PORT, function (err) {
