@@ -8,11 +8,15 @@ const studentRoutes = require('./student')
 const orderRoutes = require('./order')
 const game = require('../controllers/game')
 const wechat = require('../controllers/wechat')
+const index = require('../controllers/index')
 
+// cms server & wechat
 router.get('/movie', game.movie)
+router.get('/index', index.index)
 router.get('/wx', wechat.hear)
 router.post('/wx', wechat.hear)
 
+// cms api
 router.use('/api', jwt(), userRoutes.routes())
 router.use('/api', jwt(), teacherRoutes.routes())
 router.use('/api', jwt(), campusRoutes.routes())
