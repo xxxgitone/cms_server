@@ -2,6 +2,8 @@ const Koa = require('koa')
 const json = require('koa-json')
 const logger = require('koa-logger')
 const views = require('koa-views')
+const server = require('koa-static')
+const path = require('path')
 const bodyParser = require('koa-bodyparser')
 const config = require('./app/config/config')
 const mongoose = require('mongoose')
@@ -26,6 +28,8 @@ app.use(json())
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
+
+app.use(server(__dirname + '/public'))
 
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -52,6 +56,7 @@ wechatApi.deleteMenu().then(() => {
 app
   .use(router.routes())
   .use(router.allowedMethods())
+
 
 // axios.get('https://www.easy-mock.com/mock/59c35a9fe0dc663341b2ec0c/api/order').then((res) => {
 //   res.data.data.forEach(item => {
