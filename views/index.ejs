@@ -1,6 +1,31 @@
 <%- include('./layouts/header') %>
 
-<a href="javascript:;" class="weui-btn weui-btn_primary"><%= title %></a>
+<div class="weui-tab">
+  <div class="weui-tab__panel">
+    <div>Page 1</div>
+    <div style="display:none">Page 2</div>
+    <div style="display:none">Page 3</div>
+    <div style="display:none">Page 4</div>    
+  </div>
+  <div class="weui-tabbar">
+      <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+          <img src="images/course.png" alt="" class="weui-tabbar__icon">
+          <p class="weui-tabbar__label">课程报名</p>
+      </a>
+      <a href="javascript:;" class="weui-tabbar__item">
+          <img src="images/shiting.png" alt="" class="weui-tabbar__icon">
+          <p class="weui-tabbar__label">试听预约</p>
+      </a>
+      <a href="javascript:;" class="weui-tabbar__item">
+          <img src="images/teacher.png" alt="" class="weui-tabbar__icon">
+          <p class="weui-tabbar__label">教师风采</p>
+      </a>
+      <a href="javascript:;" class="weui-tabbar__item">
+          <img src="images/me.png" alt="" class="weui-tabbar__icon">
+          <p class="weui-tabbar__label">我的信息</p>
+      </a>
+  </div>
+</div>
 
 <script src="/js/index.js"></script>
 <%- include('./layouts/footer') %>
