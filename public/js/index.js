@@ -12,4 +12,8 @@ $(function() {
       lastIndex = index
     }
   })
+
+  $.get('/api/courses', function (data) {
+    console.log(data)
+  })
 })

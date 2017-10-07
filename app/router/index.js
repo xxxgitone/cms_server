@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const jwt = require('../middlewares/jwtMiddle')
+// const jwt = require('../middlewares/jwtMiddle')
 const userRoutes = require('./user')
 const teacherRoutes = require('./teacher')
 const campusRoutes = require('./campus')
@@ -17,11 +17,11 @@ router.get('/wx', wechat.hear)
 router.post('/wx', wechat.hear)
 
 // cms api
-router.use('/api', jwt(), userRoutes.routes())
-router.use('/api', jwt(), teacherRoutes.routes())
-router.use('/api', jwt(), campusRoutes.routes())
-router.use('/api', jwt(), courseRoutes.routes())
-router.use('/api', jwt(), studentRoutes.routes())
-router.use('/api', jwt(), orderRoutes.routes())
+router.use('/api', userRoutes.routes())
+router.use('/api', teacherRoutes.routes())
+router.use('/api', campusRoutes.routes())
+router.use('/api', courseRoutes.routes())
+router.use('/api', studentRoutes.routes())
+router.use('/api', orderRoutes.routes())
 
 module.exports = router
