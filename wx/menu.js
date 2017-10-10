@@ -11,7 +11,7 @@ module.exports = {
         {
           type: 'view',
           name: '跳转URL',
-          url: 'http://b66e9775.ngrok.io/index'
+          url: 'http://5c020015.ngrok.io/index'
         },
         {
           type: 'scancode_push',
