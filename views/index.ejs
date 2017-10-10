@@ -1,11 +1,24 @@
 <%- include('./layouts/header') %>
+<%- include('./layouts/searchBar.ejs') %>
 
 <div class="weui-tab">
   <div class="weui-tab__panel">
-    <div>Page 1</div>
-    <div style="display:none">Page 2</div>
-    <div style="display:none">Page 3</div>
-    <div style="display:none">Page 4</div>    
+    <div style="display:block" class="tab-item">
+        <div class="weui-panel weui-panel_access">
+            <div class="weui-panel__hd">课程列表</div>
+            <div class="weui-panel__bd">
+            </div>
+            <div class="weui-panel__ft">
+                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                    <div class="weui-cell__bd">查看更多</div>
+                    <span class="weui-cell__ft"></span>
+                </a>    
+            </div>
+        </div>
+    </div>
+    <div style="display:none" class="tab-item">Page 2</div>
+    <div style="display:none" class="tab-item">Page 3</div>
+    <div style="display:none" class="tab-item">Page 4</div>    
   </div>
   <div class="weui-tabbar">
       <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
