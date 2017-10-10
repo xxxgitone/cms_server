@@ -1,3 +1,75 @@
 html, body {
   height: 100%;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.weui-tab {
+  height: calc(100% - 44px);
+}
+
+/* course detail */
+.course-info {
+  width: 100%;
+  background: #FAFAFA;
+  position: relative;
+}
+
+.course-info h4 {
+  color: #999;
+  padding: 2px;
+}
+
+.course-info img {
+  width: 100%;
+  height: 200px;
+}
+
+.course-mask {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  background: rgba(0, 0, 0, .4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+
+.course-mask h5 {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.apply-panel {
+  width: 100%;
+  background: white;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, .1);
+  position: fixed;
+  bottom: 0;
+  display: flex;
+}
+
+.apply-panel .price {
+  flex: 1;
+  color: red;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.apply-button {
+  background: red;
+  color: white;
+  text-decoration: none;
+  width: 40%;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
 }

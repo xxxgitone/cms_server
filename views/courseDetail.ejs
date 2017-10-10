@@ -1,0 +1,37 @@
+<%- include('./layouts/header') %>
+
+  <div class="course-info">
+    <h4>课程信息</h4>
+    <img src="http://dummyimage.com/400x200/f2d479/b179f2&text=C" alt="">
+    <div class="course-mask">
+      <h5><%= courseInfo.courseName %></h5>
+      <p><%= courseInfo.period%>分钟/课时</p>
+    </div>
+  </div>
+  <div class="weui-tab">
+    <div class="weui-navbar">
+        <div class="weui-navbar__item weui-bar__item_on">
+            介绍
+        </div>
+        <div class="weui-navbar__item">
+            反馈
+        </div>
+        <div class="weui-navbar__item">
+            咨询
+        </div>
+    </div>
+    <div class="weui-tab__panel">
+        <div class="tab-item" style="padding:5px">
+          <p><%= courseInfo.introduction%></p>
+        </div>
+        <div style="display:none" class="tab-item">ddPage 2</div>
+        <div style="display:none" class="tab-item">Page 3</div>
+    </div>
+  </div>
+  <div class="apply-panel">
+    <span class="price">￥<%= courseInfo.price %></span>
+    <a href="javascript:void(0)" class="apply-button">立即报名</a>
+  </div>
+
+<script src="/js/courseDetail.js"></script>
+<%- include('./layouts/footer') %>
