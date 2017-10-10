@@ -8,13 +8,13 @@ const studentRoutes = require('./student')
 const orderRoutes = require('./order')
 const game = require('../controllers/game')
 const wechat = require('../controllers/wechat')
-const index = require('../controllers/index')
 
 // cms server & wechat
 router.get('/movie', game.movie)
-router.get('/index', index.index)
+router.get('/index', wechat.index)
 router.get('/wx', wechat.hear)
 router.post('/wx', wechat.hear)
+router.get('/course/:id', wechat.courseDetial)
 
 // cms api
 router.use('/api', userRoutes.routes())
