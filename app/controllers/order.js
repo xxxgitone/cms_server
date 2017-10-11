@@ -25,6 +25,16 @@ const fetchOrders = async (ctx) => {
   }
 }
 
+const addOrder = async (ctx) => {
+  const orderInfo = ctx.request.body
+  const order = await Order.create(orderInfo)
+  ctx.body = {
+    code: 0,
+    order
+  }
+}
+
 module.exports = {
-  fetchOrders
+  fetchOrders,
+  addOrder
 }
