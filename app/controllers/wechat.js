@@ -22,3 +22,12 @@ exports.courseDetial = async (ctx, next) => {
     courseInfo
   })
 }
+
+exports.orderDetail = async (ctx, next) => {
+  const id = ctx.query.courseId
+  const courseInfo = await Course.findById({_id: id})
+
+  await ctx.render('orderDetail', {
+    courseInfo
+  })
+}

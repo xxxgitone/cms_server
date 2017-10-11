@@ -47,7 +47,7 @@ html, body {
   letter-spacing: 2px;
 }
 
-.apply-panel {
+.apply-panel, .order-confirm {
   width: 100%;
   background: white;
   box-shadow: 0 -1px 2px rgba(0, 0, 0, .1);
@@ -56,7 +56,7 @@ html, body {
   display: flex;
 }
 
-.apply-panel .price {
+.apply-panel .price, .order-confirm .price {
   flex: 1;
   color: red;
   display: flex;
@@ -64,7 +64,11 @@ html, body {
   padding-left: 20px;
 }
 
-.apply-button {
+.order-confirm .price span {
+  color: black;
+}
+
+.apply-button, .confirm-order-button {
   background: red;
   color: white;
   text-decoration: none;
@@ -73,3 +77,5 @@ html, body {
   text-align: center;
   cursor: pointer;
 }
+
+/* order detail */

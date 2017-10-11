@@ -1,0 +1,14 @@
+<%- include('./layouts/header.ejs') %>
+
+<input type="hidden" name="courseid" value="<%= courseInfo._id %>" id="courseId">
+<div>
+  订单详情
+</div>
+
+<div class="order-confirm">
+  <span class="price"><span>实付</span>￥<%= courseInfo.price %></span>
+  <a href="javascript:void(0)" class="confirm-order-button" >提交订单</a>
+</div>
+
+<script src="/js/orderDetail.js"></script>
+<%- include('./layouts/footer.ejs') %>

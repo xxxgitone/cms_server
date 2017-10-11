@@ -15,6 +15,7 @@ router.get('/index', wechat.index)
 router.get('/wx', wechat.hear)
 router.post('/wx', wechat.hear)
 router.get('/course/:id', wechat.courseDetial)
+router.get('/course/order/detail', wechat.orderDetail)
 
 // cms api
 router.use('/api', userRoutes.routes())
