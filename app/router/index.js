@@ -12,6 +12,7 @@ const wechat = require('../controllers/wechat')
 // cms server & wechat
 router.get('/movie', game.movie)
 router.get('/index', wechat.index)
+router.get('/oauth', wechat.oauth)
 router.get('/wx', wechat.hear)
 router.post('/wx', wechat.hear)
 router.get('/course/:id', wechat.courseDetial)

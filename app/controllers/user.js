@@ -41,7 +41,7 @@ const loginOrAddUser = async (ctx) => {
         }
       } else {
         const userToken = {
-          account: user.account,
+          // account: user.account,
           id: user._id
         }
         const token = jwt.sign(userToken, config.tokenSecret)

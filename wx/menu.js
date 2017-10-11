@@ -11,7 +11,7 @@ module.exports = {
         {
           type: 'view',
           name: '跳转URL',
-          url: 'http://d09abc27.ngrok.io/index'
+          url: 'http://935faf58.ngrok.io/oauth'
         },
         {
           type: 'scancode_push',
