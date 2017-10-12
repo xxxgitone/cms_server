@@ -14,7 +14,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://935faf58.ngrok.io/index'
+  const redirect = 'http://4df95c86.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
@@ -33,18 +33,21 @@ exports.index = async (ctx, next) => {
 
   const data_next = response_next.body
   const openid = data_next.openid
-  let user = await WechatUser.findOne({openid})
-  if (!user) {
-    user = await WechatUser.create(data_next)
+  if (openid) {
+    let user = await WechatUser.findOne({openid})
+    if (!user) {
+      user = await WechatUser.create(data_next)
+    }
+  
+    const userToken = {
+      id: user._id
+    }
+  
+    const token = jwt.sign(userToken, config.tokenSecret)
+    ctx.state.token = token
+  } else {
+    ctx.state.token = ''
   }
-
-  const userToken = {
-    id: user._id
-  }
-
-  const token = jwt.sign(userToken, config.tokenSecret)
-  ctx.state.wechatuser = Object.assign(user, {token})
-  console.log(ctx.state)
 
   await ctx.render('index', {
     title: '首页'
