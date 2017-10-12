@@ -18,7 +18,9 @@
     </div>
     <div style="display:none" class="tab-item">Page 2</div>
     <div style="display:none" class="tab-item">Page 3</div>
-    <div style="display:none" class="tab-item">Page 4</div>    
+    <div style="display:none" class="tab-item">
+        <span class="nickname"></span>
+    </div>    
   </div>
   <div class="weui-tabbar">
       <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
@@ -40,5 +42,11 @@
   </div>
 </div>
 
+<script>
+    if (!!'<%= token %>') {
+        var token = '<%= token %>'
+        localStorage.setItem('wechat-token', token)
+    }
+</script>
 <script src="/js/index.js"></script>
 <%- include('./layouts/footer') %>

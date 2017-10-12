@@ -13,7 +13,8 @@ $(function() {
     }
   })
 
-  $.get('/api/courses', function (data) {
+  var token = localStorage.getItem('wechat-token')
+  $.get('/api/courses?token=' + token, function (data) {
     var course = data.course
     console.log(course)
     var html = course.map(function (item) {
@@ -30,5 +31,11 @@ $(function() {
       `
     }).join('')
     $('.weui-panel__bd').html(html)
+  })
+
+  $.get('/api/wechatuser?token=' + token, function (data) {
+    const user = data.user
+    console.log(user)
+    $('.nickname').html(user.nickname)
   })
 })
