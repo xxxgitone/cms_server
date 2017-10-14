@@ -14,7 +14,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://4df95c86.ngrok.io/index'
+  const redirect = 'http://a472c75e.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
