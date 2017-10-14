@@ -4,6 +4,58 @@
 <div>
   订单详情
 </div>
+<div style="width:100%">
+  <div class="weui-cells__title">请填写学员信息</div>
+  <div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">学员姓名</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入学员姓名" id="studentName"/>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">手机号</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="tel" placeholder="请输入手机号" id="phoneNumber">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">出生日期</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="date" placeholder="请选择出生日期" id="birthday"/>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">家长姓名</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入家长姓名" id="parentName"/>
+        </div>
+    </div>
+  </div>
+  <div class="weui-cells__title">性别</div>
+  <div class="weui-cells weui-cells_radio">
+      <label class="weui-cell weui-check__label" for="male">
+          <div class="weui-cell__bd">
+              <p>男</p>
+          </div>
+          <div class="weui-cell__ft">
+              <input type="radio" class="weui-check" name="gender" id="male" value="M" checked="checked">
+              <span class="weui-icon-checked"></span>
+          </div>
+      </label>
+      <label class="weui-cell weui-check__label" for="fmale">
+          <div class="weui-cell__bd">
+              <p>女</p>
+          </div>
+          <div class="weui-cell__ft">
+              <input type="radio" name="gender" class="weui-check" value="F" id="fmale">
+              <span class="weui-icon-checked"></span>
+          </div>
+      </label>
+    </div>
+</div>
 
 <div class="order-confirm">
   <span class="price"><span>实付</span>￥<%= courseInfo.price %></span>
