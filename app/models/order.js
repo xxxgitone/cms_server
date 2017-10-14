@@ -4,13 +4,19 @@ const Schema = mongoose.Schema
 const OrderSchema = new Schema({
   orderNo: Number,
   campus: String,
-  course: String,
+  course: {
+    type: Schema.Types.ObjectId,
+    ref: 'Course'
+  },
   price: Number,
   number: Number,
   receivable: Number,
   revenue: Number,
   payment: String,
-  studentName: String,
+  student: {
+    type: Schema.Types.ObjectId,
+    ref: 'Student'
+  },
   handleCampus: String,
   date: {
     type: Date,

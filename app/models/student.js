@@ -5,7 +5,10 @@ const StudentSchema = new Schema({
   studentName: String,
   phoneNumber: Number,
   parentName: String,
-  course: String,
+  course: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Course'
+  }],
   startDate: Date,
   endDate: Date,
   campus: String,
@@ -13,6 +16,10 @@ const StudentSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  order: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Order'
+  }],
   receivable: Number,
   revenue: Number,
   arrears: Number,
