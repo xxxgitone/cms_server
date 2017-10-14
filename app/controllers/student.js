@@ -11,8 +11,13 @@ const fetchStudents = async (ctx) => {
     students
   ] = await Promise.all([
     Student.find().count(query),
-    Student.find(query).skip((pagenum - 1) * pagesize)
+    Student.find(query)
+      .skip((pagenum - 1) * pagesize)
       .limit(pagesize)
+      .sort({applyDate: -1})
+      .populate('order')
+      .populate('course')
+      .exec()
   ])
   ctx.body = {
     code: 0,
