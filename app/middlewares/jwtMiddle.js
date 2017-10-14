@@ -7,7 +7,7 @@ module.exports = function () {
     if (action === 'login') {
       await next()
     } else {
-      const token = ctx.request.headers['cms-token'] || ctx.request.query.token
+      const token = ctx.request.headers['cms-token'] || ctx.request.query.token || ctx.request.body.token
       if (token) {
         const decoded = jwt.verify(token, config.tokenSecret)
         if (decoded && decoded.id) {
