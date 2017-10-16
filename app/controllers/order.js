@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Order = require('../models/order')
 const Student = require('../models/student')
 const Course = require('../models/course')
+const OrderNo = require('../models/orderNo')
 
 const fetchOrders = async (ctx) => {
   const campus = ctx.query.campus ? {campus: ctx.query.campus} : {}
@@ -52,9 +53,10 @@ const addOrder = async (ctx) => {
   })
 
   const studentInfo = await student.save()
+  const orderNo = await OrderNo.findOneAndUpdate({name: 'orderNo'}, {$inc: {id: 1}})
 
   const order = new Order({
-    orderNo: 10001,
+    orderNo: orderNo,
     campus: courseInfo.campus,
     course: courseId,
     price: courseInfo.price,
