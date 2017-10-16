@@ -15,8 +15,9 @@ $(function () {
     }
     console.log(form)
     $.post('/api/orders', form, function (data) {
-      console.log(data)
+      if (data.code === 0) {
+        window.location.href = '/success'
+      }
     })
   })
-
 })
