@@ -9,6 +9,7 @@ const StudentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Course'
   }],
+  openid: String,
   startDate: Date,
   endDate: Date,
   campus: String,

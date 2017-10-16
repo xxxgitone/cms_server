@@ -45,8 +45,10 @@ exports.index = async (ctx, next) => {
   
     const token = jwt.sign(userToken, config.tokenSecret)
     ctx.state.token = token
+    ctx.state.openid = openid
   } else {
     ctx.state.token = ''
+    ctx.state.openid = ''
   }
 
   await ctx.render('index', {

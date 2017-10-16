@@ -39,6 +39,7 @@ const addOrder = async (ctx) => {
   const courseInfo = await Course.findById({_id: courseId})
   console.log(courseInfo)
   const student = new Student({
+    openid: form.openid,
     studentName: form.studentName,
     phoneNumber: form.phoneNumber,
     parentName: form.parentName,

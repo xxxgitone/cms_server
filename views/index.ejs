@@ -43,9 +43,11 @@
 </div>
 
 <script>
-    if (!!'<%= token %>') {
+    if (!!'<%= token %>' && !!'<%= openid %>') {
         var token = '<%= token %>'
+        var openid = '<%= openid %>'
         localStorage.setItem('wechat-token', token)
+        localStorage.setItem('openid', openid)
     }
 </script>
 <script src="/js/index.js"></script>

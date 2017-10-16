@@ -1,9 +1,11 @@
 $(function () {
   var token = localStorage.getItem('wechat-token')
+  var openid = localStorage.getItem('openid')
   $('.confirm-order-button').on('tap', function () {
     const courseId = $('#courseId').val()
     const form = {
       token,
+      openid,
       courseId,
       number: 1,
       payment: '微信',
