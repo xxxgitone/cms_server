@@ -10,12 +10,16 @@ const CourseSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  endDate: Date,
   introduction: String,
   period: Number,
   totalPeriod: Number,
   price: Number,
   picUrl: String,
-  tag: String
+  tag: String,
+  courseType: {
+    type: String
+  }
 })
 
 const Course = mongoose.model('Course', CourseSchema)

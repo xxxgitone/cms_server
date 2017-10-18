@@ -5,7 +5,8 @@ const fetchCourse = async (ctx) => {
   const campus = query.campus ? {campus: query.campus} : {}
   const courseName = query.courseName ? {courseName: {$regex: query.courseName, $options: 'g'}} : {}
   const tag = query.tag ? {tag: query.tag} : {}
-  const searchQuery = Object.assign(courseName, campus, tag)
+  const courseType = query.courseType ? {courseType: query.courseType} : {}
+  const searchQuery = Object.assign(courseName, campus, tag, courseType)
   const pagenum = Number(query.pagenum) || 1
   const pagesize = Number(query.pagesize) || 16
   const [
