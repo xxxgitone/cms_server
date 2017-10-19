@@ -28,9 +28,16 @@
         <div style="display:none" class="tab-item">Page 3</div>
     </div>
   </div>
-  <div class="apply-panel">
-    <span class="price">￥<%= courseInfo.price %></span>
-    <a href='/course/order/detail?courseId=<%= courseInfo._id %>' class="apply-button">立即报名</a>
-  </div>
+  <% if (courseInfo.courseType === 'formal') {%>
+    <div class="apply-panel">
+      <span class="price">￥<%= courseInfo.price %></span>
+      <a href='/course/order/detail?courseId=<%= courseInfo._id %>' class="apply-button">立即报名</a>
+    </div>
+  <% } else if (courseInfo.courseType === 'audition') {%>
+    <div class="apply-panel">
+      <span class="price">￥0</span>
+      <a href='/course/order/detail?courseId=<%= courseInfo._id %>' class="apply-button">立即预约</a>
+    </div>
+  <% } %>
 <script src="/js/courseDetail.js"></script>
 <%- include('./layouts/footer') %>

@@ -68,7 +68,7 @@ html, body {
   color: black;
 }
 
-.apply-button, .confirm-order-button {
+.apply-button, .confirm-order-button, .confirm-audition-button {
   background: red;
   color: white;
   text-decoration: none;

@@ -57,10 +57,18 @@
     </div>
 </div>
 
-<div class="order-confirm">
-  <span class="price"><span>实付</span>￥<%= courseInfo.price %></span>
-  <a href="javascript:void(0)" class="confirm-order-button" >提交订单</a>
-</div>
+
+<% if (courseInfo.courseType === 'formal') {%>
+    <div class="order-confirm">
+        <span class="price"><span>实付</span>￥<%= courseInfo.price %></span>
+        <a href="javascript:void(0)" class="confirm-order-button" >提交订单</a>
+    </div>
+<% } else if (courseInfo.courseType === 'audition') {%>
+    <div class="order-confirm">
+        <span class="price"><span>实付</span>￥0</span>
+        <a href="javascript:void(0)" class="confirm-audition-button" >提交信息</a>
+    </div>
+<% } %>
 
 <script src="/js/orderDetail.js"></script>
 <%- include('./layouts/footer.ejs') %>
