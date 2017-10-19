@@ -5,8 +5,8 @@
   <div class="weui-tab__panel">
     <div style="display:block" class="tab-item">
         <div class="weui-panel weui-panel_access">
-            <div class="weui-panel__hd">课程列表</div>
-            <div class="weui-panel__bd">
+            <div class="weui-panel__hd">正式课程列表</div>
+            <div class="weui-panel__bd formal">
             </div>
             <div class="weui-panel__ft">
                 <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
@@ -16,26 +16,38 @@
             </div>
         </div>
     </div>
-    <div style="display:none" class="tab-item">Page 2</div>
+    <div style="display:none" class="tab-item">
+        <div class="weui-panel weui-panel_access">
+            <div class="weui-panel__hd">试听课程列表</div>
+            <div class="weui-panel__bd audition">
+            </div>
+            <div class="weui-panel__ft">
+                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                    <div class="weui-cell__bd">查看更多</div>
+                    <span class="weui-cell__ft"></span>
+                </a>    
+            </div>
+        </div>
+    </div>
     <div style="display:none" class="tab-item">Page 3</div>
     <div style="display:none" class="tab-item">
         <span class="nickname"></span>
     </div>    
   </div>
   <div class="weui-tabbar">
-      <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+      <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on" data-link="formal">
           <img src="images/course.png" alt="" class="weui-tabbar__icon">
           <p class="weui-tabbar__label">课程报名</p>
       </a>
-      <a href="javascript:;" class="weui-tabbar__item">
+      <a href="javascript:;" class="weui-tabbar__item" data-link="audition">
           <img src="images/shiting.png" alt="" class="weui-tabbar__icon">
           <p class="weui-tabbar__label">试听预约</p>
       </a>
-      <a href="javascript:;" class="weui-tabbar__item">
+      <a href="javascript:;" class="weui-tabbar__item" data-link="teacher">
           <img src="images/teacher.png" alt="" class="weui-tabbar__icon">
           <p class="weui-tabbar__label">教师风采</p>
       </a>
-      <a href="javascript:;" class="weui-tabbar__item">
+      <a href="javascript:;" class="weui-tabbar__item" data-link="personal">
           <img src="images/me.png" alt="" class="weui-tabbar__icon">
           <p class="weui-tabbar__label">我的信息</p>
       </a>
