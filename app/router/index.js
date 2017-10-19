@@ -8,6 +8,7 @@ const studentRoutes = require('./student')
 const orderRoutes = require('./order')
 const wechatUserRoutes = require('./wechatUser')
 const auditionRoutes = require('./audition')
+const commentRoutes = require('./comment')
 const game = require('../controllers/game')
 const wechat = require('../controllers/wechat')
 
@@ -30,5 +31,6 @@ router.use('/api', jwt(), studentRoutes.routes())
 router.use('/api', jwt(), orderRoutes.routes())
 router.use('/api', jwt(), wechatUserRoutes.routes())
 router.use('/api', jwt(), auditionRoutes.routes())
+router.use('/api', jwt(), commentRoutes.routes())
 
 module.exports = router
