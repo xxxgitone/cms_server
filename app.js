@@ -9,7 +9,7 @@ const config = require('./app/config/config')
 const mongoose = require('mongoose')
 const router = require('./app/router/index')
 // const axios = require('axios')
-// const Order = require('./server/models/order')
+// const Course = require('./app/models/course')
 
 const PORT = process.env.PORT || '3100'
 const ENV = process.env.NODE_ENV || 'development'
@@ -58,9 +58,9 @@ app
   .use(router.allowedMethods())
 
 
-// axios.get('https://www.easy-mock.com/mock/59c35a9fe0dc663341b2ec0c/api/order').then((res) => {
+// axios.get('https://www.easy-mock.com/mock/59c35a9fe0dc663341b2ec0c/api/course').then((res) => {
 //   res.data.data.forEach(item => {
-//     Order.create(item)
+//     Course.create(item)
 //   })
 // })
 
