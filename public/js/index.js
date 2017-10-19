@@ -45,6 +45,7 @@ $(function() {
   
   $.get('/api/wechatuser?token=' + token, function (data) {
     const user = data.user
+    localStorage.setItem('_id', user._id)
     console.log(user)
     $('.nickname').html(user.nickname)
   })

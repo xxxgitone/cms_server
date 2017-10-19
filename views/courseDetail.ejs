@@ -1,5 +1,6 @@
 <%- include('./layouts/header') %>
 
+  <input name="courseId" type="hidden" value="<%= courseInfo._id %>"/>
   <div class="course-info">
     <h4>课程信息</h4>
     <img src="http://dummyimage.com/400x200/f2d479/b179f2&text=C" alt="">
@@ -25,7 +26,16 @@
           <p><%= courseInfo.introduction%></p>
         </div>
         <div style="display:none" class="tab-item">ddPage 2</div>
-        <div style="display:none" class="tab-item">Page 3</div>
+        <div style="display:none" class="tab-item">
+          <div class="weui-cells">
+              <div class="weui-cell">
+                  <div class="weui-cell__bd">
+                      <input name="content" class="weui-input" type="text" placeholder="请输入咨询内容"/>
+                  </div>
+              </div>
+          </div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary submit-content">提交咨询</a>
+        </div>
     </div>
   </div>
   <% if (courseInfo.courseType === 'formal') {%>
