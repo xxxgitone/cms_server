@@ -26,7 +26,7 @@ $(function() {
       from: _id,
       content,
     }
-    $.post('/api/comment', form, function (data) {
+    $.post('/api/comments', form, function (data) {
       console.log(data)
     })
   })

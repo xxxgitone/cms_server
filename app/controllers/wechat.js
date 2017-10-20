@@ -6,6 +6,7 @@ const wechat = require('../../wechat/verification')
 const wx = require('../../wx/index')
 const Course = require('../models/course')
 const WechatUser = require('../models/wechatUser')
+const Comment = require('../models/comment')
 const jwt = require('jsonwebtoken')
 
 exports.hear = async (ctx, next) => {
@@ -14,7 +15,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://aecca6c4.ngrok.io/index'
+  const redirect = 'http://fcc8551f.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
@@ -59,9 +60,11 @@ exports.index = async (ctx, next) => {
 exports.courseDetial = async (ctx, next) => {
   const {id} = ctx.params
   const courseInfo = await Course.findById({_id: id})
+  const comments = await Comment.fetchComments()
 
   await ctx.render('courseDetail', {
-    courseInfo
+    courseInfo,
+    comments
   })
 }
 

@@ -27,6 +27,22 @@
         </div>
         <div style="display:none" class="tab-item">ddPage 2</div>
         <div style="display:none" class="tab-item">
+          <div class="comment-list-wrapper">
+            <% if (comments.length > 0) {%>
+              <% for(var i = 0; i < comments.length; i++) {%>
+                <div class="comment-item">
+                  <div class="comment-auth-avatar">
+                    <img src=<%= comments[i].from.headimgurl %> />
+                  </div>
+                  <div class="comment-content">
+                    <span><%= comments[i].from.nickname %></span>
+                    <span><%= comments[i].content %></span>
+                    <span><%= comments[i].createAt %></span>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+          </div>
           <div class="weui-cells">
               <div class="weui-cell">
                   <div class="weui-cell__bd">
