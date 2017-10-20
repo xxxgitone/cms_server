@@ -2,6 +2,14 @@ const Comment = require('../models/comment')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
+exports.fetchComments = async (ctx) => {
+  const comments = await Comment.find({}).populate('course').populate('from')
+  ctx.body = {
+    code: 0,
+    comments
+  }
+}
+
 exports.addComment = async (ctx) => {
   const body = ctx.request.body
   const course = new ObjectId(body.course)
@@ -11,5 +19,9 @@ exports.addComment = async (ctx) => {
     from,
     content: body.content
   })
-  console.log(comment)
+  const data = await comment.save()
+  ctx.body = {
+    code: 0,
+    comment: data
+  }
 }

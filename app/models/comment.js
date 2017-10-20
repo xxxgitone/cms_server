@@ -29,5 +29,14 @@ const CommentSchema = new Schema({
   }
 })
 
+
+CommentSchema.static('fetchComments', function() {
+  return this
+    .find()
+    .populate('course')
+    .populate('from')
+    .exec()
+})
+
 const Comment = mongoose.model('Comment', CommentSchema)
 module.exports = Comment
