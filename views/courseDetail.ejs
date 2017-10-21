@@ -25,17 +25,42 @@
         <div class="tab-item" style="padding:5px">
           <p><%= courseInfo.introduction%></p>
         </div>
-        <div style="display:none" class="tab-item">ddPage 2</div>
         <div style="display:none" class="tab-item">
           <div class="weui-cells weui-cells_form">
               <div class="weui-cell">
                   <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" name="content" placeholder="请输入咨询内容" rows="2"></textarea>
+                    <textarea class="weui-textarea feedback" name="content" placeholder="请输入咨询内容" rows="2"></textarea>
+                  </div>
+              </div>
+          </div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary submit-feedback">提交反馈</a>
+          <div class="comment-list-wrapper feedback">
+            <% if (commentsFeedback.length > 0) {%>
+              <% for(var i = 0; i < commentsFeedback.length; i++) {%>
+                <div class="comment-item">
+                  <div class="comment-auth-avatar">
+                    <img src=<%= commentsFeedback[i].from.headimgurl %> />
+                  </div>
+                  <div class="comment-content-info">
+                    <span class="comment-nickname"><%= commentsFeedback[i].from.nickname %></span>
+                    <span class="comment-content"><%= commentsFeedback[i].content %></span>
+                    <span class="comment-timeago"><%= commentsFeedback[i].create %></span>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+        <div style="display:none" class="tab-item">
+          <div class="weui-cells weui-cells_form">
+              <div class="weui-cell">
+                  <div class="weui-cell__bd">
+                    <textarea class="weui-textarea advisory" name="content" placeholder="请输入咨询内容" rows="2"></textarea>
                   </div>
               </div>
           </div>
           <a href="javascript:;" class="weui-btn weui-btn_primary submit-content">提交咨询</a>
-          <div class="comment-list-wrapper commentsAdv">
+          <div class="comment-list-wrapper advisory">
             <% if (commentsAdv.length > 0) {%>
               <% for(var i = 0; i < commentsAdv.length; i++) {%>
                 <div class="comment-item">

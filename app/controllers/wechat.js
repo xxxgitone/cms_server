@@ -62,14 +62,18 @@ exports.courseDetial = async (ctx, next) => {
   const {id} = ctx.params
   const courseInfo = await Course.findById({_id: id})
   const commentsAdv = await Comment.fetchCommentsByCourseId(id, 'advisory')
-  console.log(commentsAdv)
+  const commentsFeedback = await Comment.fetchCommentsByCourseId(id, 'feedback')
   commentsAdv.forEach((item) => {
+    item.create = util.timeAgo(item.createAt)
+  })
+  commentsFeedback.forEach((item) => {
     item.create = util.timeAgo(item.createAt)
   })
 
   await ctx.render('courseDetail', {
     courseInfo,
-    commentsAdv
+    commentsAdv,
+    commentsFeedback
   })
 }
 
