@@ -9,7 +9,7 @@
       <p><%= courseInfo.period%>分钟/课时</p>
     </div>
   </div>
-  <div class="weui-tab">
+  <div class="weui-tab courseDetail">
     <div class="weui-navbar">
         <div class="weui-navbar__item weui-bar__item_on">
             介绍
@@ -21,36 +21,43 @@
             咨询
         </div>
     </div>
-    <div class="weui-tab__panel">
+    <div class="weui-tab__panel courseDetail">
         <div class="tab-item" style="padding:5px">
           <p><%= courseInfo.introduction%></p>
         </div>
         <div style="display:none" class="tab-item">ddPage 2</div>
         <div style="display:none" class="tab-item">
-          <div class="comment-list-wrapper">
-            <% if (comments.length > 0) {%>
-              <% for(var i = 0; i < comments.length; i++) {%>
+          <div class="weui-cells weui-cells_form">
+              <div class="weui-cell">
+                  <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" name="content" placeholder="请输入咨询内容" rows="2"></textarea>
+                  </div>
+              </div>
+          </div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary submit-content">提交咨询</a>
+          <div class="comment-list-wrapper commentsAdv">
+            <% if (commentsAdv.length > 0) {%>
+              <% for(var i = 0; i < commentsAdv.length; i++) {%>
                 <div class="comment-item">
                   <div class="comment-auth-avatar">
-                    <img src=<%= comments[i].from.headimgurl %> />
+                    <img src=<%= commentsAdv[i].from.headimgurl %> />
                   </div>
-                  <div class="comment-content">
-                    <span><%= comments[i].from.nickname %></span>
-                    <span><%= comments[i].content %></span>
-                    <span><%= comments[i].createAt %></span>
+                  <div class="comment-content-info">
+                    <span class="comment-nickname"><%= commentsAdv[i].from.nickname %></span>
+                    <span class="comment-content"><%= commentsAdv[i].content %></span>
+                    <span class="comment-timeago"><%= commentsAdv[i].create %></span>
                   </div>
                 </div>
               <% } %>
             <% } %>
           </div>
-          <div class="weui-cells">
-              <div class="weui-cell">
-                  <div class="weui-cell__bd">
-                      <input name="content" class="weui-input" type="text" placeholder="请输入咨询内容"/>
-                  </div>
-              </div>
-          </div>
-          <a href="javascript:;" class="weui-btn weui-btn_primary submit-content">提交咨询</a>
+        </div>
+    </div>
+    <div id="toast" style="display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+            <p class="weui-toast__content">已完成</p>
         </div>
     </div>
   </div>
@@ -65,5 +72,6 @@
       <a href='/course/order/detail?courseId=<%= courseInfo._id %>' class="apply-button">立即预约</a>
     </div>
   <% } %>
+<script src="/js/util.js"></script>
 <script src="/js/courseDetail.js"></script>
 <%- include('./layouts/footer') %>

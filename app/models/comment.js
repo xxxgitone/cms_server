@@ -26,16 +26,18 @@ const CommentSchema = new Schema({
   createAt: {
     type: Date,
     default: Date.now()
-  }
+  },
+  type: String
 })
 
 
-CommentSchema.static('fetchComments', function() {
+CommentSchema.static('fetchCommentsByCourseId', function(id, type, cb) {
   return this
-    .find()
+    .find({course: id, type: type})
+    .sort({createAt: -1})
     .populate('course')
     .populate('from')
-    .exec()
+    .exec(cb)
 })
 
 const Comment = mongoose.model('Comment', CommentSchema)

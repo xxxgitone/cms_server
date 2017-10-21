@@ -17,11 +17,14 @@ exports.addComment = async (ctx) => {
   const comment = new Comment({
     course,
     from,
-    content: body.content
+    content: body.content,
+    type: body.type
   })
   const data = await comment.save()
+  const res = await Comment.findById({_id: data._id}).populate('course').populate('from')
+  console.log(res)
   ctx.body = {
     code: 0,
-    comment: data
+    comment: res
   }
 }

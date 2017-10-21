@@ -19,15 +19,30 @@ $(function() {
   })
 
   $('.submit-content').on('tap', function () {
-    var content = $('input[name="content"]').val()
+    var content = $('.weui-textarea').val()
+    if (!content) return
     var form = {
       token,
       course: courseId,
       from: _id,
       content,
+      type: 'advisory'
     }
+
     $.post('/api/comments', form, function (data) {
-      console.log(data)
+      if (data.code === 0) {
+        $('.weui-textarea').val('')
+        $('#toast').css('display', 'block')
+        $('.weui-toast__content').html('成功')
+        var comment = data.comment
+        var create = timeAgo(comment.createAt)
+        var html = 
+          '<div class="comment-item"><div class="comment-auth-avatar"><img src="' + comment.from.headimgurl + '"/></div><div class="comment-content-info"><span class="comment-nickname">' + comment.from.nickname + '</span><span class="comment-content">' + comment.content + '</span><span class="comment-timeago">' + create + '</span></div></div>'
+        $('.comment-list-wrapper.commentsAdv').prepend(html)
+        setTimeout(function () {
+          $('#toast').css('display', 'none')
+        }, 1000)
+      }
     })
   })
 })
