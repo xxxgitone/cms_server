@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
 exports.fetchComments = async (ctx) => {
-  const comments = await Comment.find({}).populate('course').populate('from')
+  const courseId = ctx.query.courseId || ''
+  const type = ctx.query.type || ''
+  const comments = await Comment.fetchCommentsByCourseId(courseId, type)
   ctx.body = {
     code: 0,
     comments
