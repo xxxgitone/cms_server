@@ -1,5 +1,5 @@
 html, body {
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
 }
 
@@ -7,8 +7,13 @@ html, body {
   box-sizing: inherit;
 }
 
-.weui-tab {
-  height: calc(100% - 44px);
+.weui-tab.index {
+  height: calc(100vh - 44px);
+}
+
+.weui-tab.courseDetail {
+  margin-bottom: 45px;
+  min-height: calc(100% - 44px);
 }
 
 /* course detail */
@@ -76,6 +81,53 @@ html, body {
   padding: 10px;
   text-align: center;
   cursor: pointer;
+}
+
+.weui-tab__panel.courseDetail {
+  height: 100%;
+}
+
+.comment-list-wrapper {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.comment-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.comment-auth-avatar {
+  padding: 0 10px 0 15px;
+}
+
+.comment-auth-avatar img {
+  width: 30px;
+  height: 30px;
+}
+
+.comment-content-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-nickname {
+  color: #666;
+  font-size: 14px;
+  padding: 0;
+}
+
+.comment-content {
+  display: inline-block;
+  padding: 0 8px 2px 0;
+}
+
+.comment-timeago {
+  color: #999;
+  font-size: 12px;
 }
 
 /* order detail */

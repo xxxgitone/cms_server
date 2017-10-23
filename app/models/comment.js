@@ -20,7 +20,11 @@ const CommentSchema = new Schema({
       type: ObjectId, 
       ref: 'WechatUser'
     },
-    content: String
+    content: String,
+    createAt: {
+      type: Date,
+      default: Date.now()
+    }
   }],
   content: String,
   createAt: {
@@ -37,6 +41,7 @@ CommentSchema.static('fetchCommentsByCourseId', function(id, type, cb) {
     .sort({createAt: -1})
     .populate('course')
     .populate('from')
+    .populate('reply.from')
     .exec(cb)
 })
 

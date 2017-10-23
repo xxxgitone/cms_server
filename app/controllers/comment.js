@@ -14,17 +14,32 @@ exports.fetchComments = async (ctx) => {
 
 exports.addComment = async (ctx) => {
   const body = ctx.request.body
-  const course = new ObjectId(body.course)
   const from = new ObjectId(body.from)
-  const comment = new Comment({
-    course,
-    from,
-    content: body.content,
-    type: body.type
-  })
-  const data = await comment.save()
-  const res = await Comment.findById({_id: data._id}).populate('course').populate('from')
-  console.log(res)
+  const course = body.course ? new ObjectId(body.course) : ''
+  let comment, data
+  
+  if (body.id) {
+    comment = await Comment.findById({_id: body.id})
+    comment.reply.push({
+      from: from,
+      to: comment.from,
+      content: body.content
+    })
+    data = await comment.save()
+  } else {
+    comment = new Comment({
+      course,
+      from,
+      content: body.content,
+      type: body.type
+    })
+    data = await comment.save()
+  }
+  const res = await Comment.findById({_id: data._id})
+    .populate('course')
+    .populate('from')
+    .populate('reply.from')
+    .exec()
   ctx.body = {
     code: 0,
     comment: res
