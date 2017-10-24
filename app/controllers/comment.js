@@ -23,7 +23,8 @@ exports.addComment = async (ctx) => {
     comment.reply.push({
       from: from,
       to: comment.from,
-      content: body.content
+      content: body.content,
+      createAt: Date.now()
     })
     data = await comment.save()
   } else {
@@ -31,7 +32,8 @@ exports.addComment = async (ctx) => {
       course,
       from,
       content: body.content,
-      type: body.type
+      type: body.type,
+      createAt: Date.now()
     })
     data = await comment.save()
   }

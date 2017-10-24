@@ -34,7 +34,6 @@ const CommentSchema = new Schema({
   type: String
 })
 
-
 CommentSchema.static('fetchCommentsByCourseId', function(id, type, cb) {
   return this
     .find({course: id, type: type})
