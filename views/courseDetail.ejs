@@ -47,6 +47,25 @@
                     <span class="comment-timeago"><%= commentsFeedback[i].create %></span>
                   </div>
                 </div>
+                <div class="sub-item">
+                  <% if (commentsFeedback[i].reply.length > 0) {%>
+                    <% for (var j = 0; j < commentsFeedback[i].reply.length; j ++) { %>
+                      <div class="comment-item">
+                        <div class="comment-auth-avatar">
+                          <img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/15-01-128.png" />
+                        </div>
+                        <div class="comment-content-info">
+                          <span class="comment-nickname">
+                            <%= commentsFeedback[i].reply[j].from.userName %>
+                            <span>[<%= commentsFeedback[i].reply[j].from.roleTitle %>]</span>
+                          </span>
+                          <span class="comment-content"><%= commentsFeedback[i].reply[j].content %></span>
+                          <span class="comment-timeago"><%= commentsFeedback[i].reply[j].create %></span>
+                        </div>
+                      </div>
+                    <%}%>
+                  <%}%>
+                </div>
               <% } %>
             <% } %>
           </div>
@@ -72,6 +91,25 @@
                     <span class="comment-content"><%= commentsAdv[i].content %></span>
                     <span class="comment-timeago"><%= commentsAdv[i].create %></span>
                   </div>
+                </div>
+                <div class="sub-item">
+                  <% if (commentsAdv[i].reply.length > 0) {%>
+                    <% for (var j = 0; j < commentsAdv[i].reply.length; j ++) { %>
+                      <div class="comment-item">
+                        <div class="comment-auth-avatar">
+                          <img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/15-01-128.png" />
+                        </div>
+                        <div class="comment-content-info">
+                          <span class="comment-nickname">
+                            <%= commentsAdv[i].reply[j].from.userName %>
+                            <span>[<%= commentsAdv[i].reply[j].from.roleTitle %>]</span>
+                          </span>
+                          <span class="comment-content"><%= commentsAdv[i].reply[j].content %></span>
+                          <span class="comment-timeago"><%= commentsAdv[i].reply[j].create %></span>
+                        </div>
+                      </div>
+                    <%}%>
+                  <%}%>
                 </div>
               <% } %>
             <% } %>
