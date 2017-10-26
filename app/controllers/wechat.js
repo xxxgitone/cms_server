@@ -7,6 +7,7 @@ const wx = require('../../wx/index')
 const Course = require('../models/course')
 const WechatUser = require('../models/wechatUser')
 const Comment = require('../models/comment')
+const Order = require('../models/order')
 const jwt = require('jsonwebtoken')
 const util = require('../../libs/util')
 
@@ -16,7 +17,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://9ffc936b.ngrok.io/index'
+  const redirect = 'http://64cedd5a.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
@@ -48,9 +49,11 @@ exports.index = async (ctx, next) => {
     const token = jwt.sign(userToken, config.tokenSecret)
     ctx.state.token = token
     ctx.state.openid = openid
+    ctx.state.userId = user._id
   } else {
     ctx.state.token = ''
     ctx.state.openid = ''
+    ctx.state.userId = ''
   }
 
   await ctx.render('index', {
@@ -58,16 +61,37 @@ exports.index = async (ctx, next) => {
   })
 }
 
+function formatRole (role) {
+  if (role === 'admin') {
+    return '管理员'
+  } else if (role === 'front') {
+    return '校区前台'
+  }
+}
+
 exports.courseDetial = async (ctx, next) => {
   const {id} = ctx.params
   const courseInfo = await Course.findById({_id: id})
-  const commentsAdv = await Comment.fetchCommentsByCourseId(id, 'advisory')
-  const commentsFeedback = await Comment.fetchCommentsByCourseId(id, 'feedback')
-  commentsAdv.forEach((item) => {
-    item.create = util.timeAgo(item.createAt)
-  })
-  commentsFeedback.forEach((item) => {
-    item.create = util.timeAgo(item.createAt)
+  const [
+    commentsAdv,
+    commentsFeedback
+  ] = await Promise.all([
+    Comment.fetchCommentsByCourseId(id, 'advisory'),
+    Comment.fetchCommentsByCourseId(id, 'feedback')
+  ])
+  
+  const comments = [commentsAdv, commentsFeedback]
+
+  comments.forEach((comment) => {
+    comment.forEach((item) => {
+      item.create = util.timeAgo(item.createAt)
+      if (item.reply.length > 0) {
+        item.reply.forEach((reply) => {
+          reply.create = util.timeAgo(reply.createAt)
+          reply.from.roleTitle = formatRole(reply.from.role)
+        })
+      }
+    })
   })
 
   await ctx.render('courseDetail', {
@@ -88,4 +112,13 @@ exports.orderDetail = async (ctx, next) => {
 
 exports.success = async(ctx, next) => {
   await ctx.render('success')
+}
+
+exports.myOrder = async (ctx, next) => {
+  const { fromOpenid } = ctx.query
+  const orders = await Order.find({fromOpenid: fromOpenid})
+
+  await ctx.render('myOrder', {
+    orders
+  })
 }

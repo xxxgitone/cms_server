@@ -1,0 +1,31 @@
+<%- include('./layouts/header') %>
+
+<div class="header">
+  <a href="javascript:history.go(-1)" class="back">
+    <img src="/images/back.png">
+  </a>
+  <span>我的订单</span>
+</div>
+
+<ul class="order-list">
+  <li class="order-item">
+    <div class="orderNum">订单编号: 1231454654</div>
+    <div class="order-info">
+      <a href="">
+        <img src="http://dummyimage.com/200x200/f2d479/b179f2&text=C">
+        <div>
+          <span>水粉</span>
+          <span>￥100</span>
+        </div>
+      </a>
+    </div>
+    <span class="price">总价: ￥100</span>
+  </li>
+  <li class="order-item">
+    <div class="orderNum">订单编号: 1231454654</div>
+    <div class="order-info">订单信息</div>
+    <span class="price">总价: ￥100</span>
+  </li>
+</ul>
+
+<%- include('./layouts/footer') %>
