@@ -39,7 +39,7 @@ const addOrder = async (ctx) => {
   const courseInfo = await Course.findById({_id: courseId})
   console.log(courseInfo)
   const student = new Student({
-    openid: form.openid,
+    fromOpenid: form.openid,
     studentName: form.studentName,
     phoneNumber: form.phoneNumber,
     parentName: form.parentName,
@@ -57,6 +57,7 @@ const addOrder = async (ctx) => {
   const orderNo = await OrderNo.findOneAndUpdate({name: 'orderNo'}, {$inc: {id: 1}})
 
   const order = new Order({
+    fromOpenid: form.openid,
     orderNo: orderNo,
     campus: courseInfo.campus,
     course: courseId,

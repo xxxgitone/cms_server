@@ -13,6 +13,7 @@ const OrderSchema = new Schema({
   receivable: Number,
   revenue: Number,
   payment: String,
+  fromOpenid: String,
   student: {
     type: Schema.Types.ObjectId,
     ref: 'Student'
