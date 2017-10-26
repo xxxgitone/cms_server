@@ -3,7 +3,7 @@ $(function() {
   var $tab_panels = $('.weui-tab__panel .tab-item')
   var $tabbar_item = $('.weui-tabbar a')
   var lastIndex = 0
-  $('a').on('tap', function() {
+  $('.weui-tabbar a').on('tap', function() {
     var index = $(this).index()
     var link = $(this).data('link')
     if (index !== lastIndex) {
@@ -49,4 +49,12 @@ $(function() {
     console.log(user)
     $('.nickname').html(user.nickname)
   })
+  
+  $('.my-link').on('tap', function (e) {
+    e.preventDefault()
+    var href = $(this).data('href')
+    var fromOpenid = localStorage.getItem('openid')
+    window.location.href = '/' + href + '?fromOpenid=' + fromOpenid
+  })
+
 })
