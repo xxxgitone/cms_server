@@ -117,7 +117,6 @@ exports.success = async(ctx, next) => {
 exports.myOrder = async (ctx, next) => {
   const { fromOpenid } = ctx.query
   const orders = await Order.fetchOrdersByFromOpenid(fromOpenid)
-  console.log(orders)
 
   await ctx.render('myOrder', {
     orders
