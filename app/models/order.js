@@ -26,5 +26,14 @@ const OrderSchema = new Schema({
   handlePeople: String
 })
 
+OrderSchema.static('fetchOrdersByFromOpenid', function (id, cb) {
+  return this
+    .find({fromOpenid: id})
+    .sort({date: -1})
+    .populate('student')
+    .populate('course')
+    .exec(cb)
+})
+
 const Order = mongoose.model('Order', OrderSchema)
 module.exports = Order

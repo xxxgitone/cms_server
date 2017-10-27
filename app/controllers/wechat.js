@@ -17,7 +17,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://64cedd5a.ngrok.io/index'
+  const redirect = 'http://d80a3495.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
@@ -116,7 +116,8 @@ exports.success = async(ctx, next) => {
 
 exports.myOrder = async (ctx, next) => {
   const { fromOpenid } = ctx.query
-  const orders = await Order.find({fromOpenid: fromOpenid})
+  const orders = await Order.fetchOrdersByFromOpenid(fromOpenid)
+  console.log(orders)
 
   await ctx.render('myOrder', {
     orders
