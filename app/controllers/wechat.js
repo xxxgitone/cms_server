@@ -8,6 +8,7 @@ const Course = require('../models/course')
 const WechatUser = require('../models/wechatUser')
 const Comment = require('../models/comment')
 const Order = require('../models/order')
+const Student = require('../models/student')
 const jwt = require('jsonwebtoken')
 const util = require('../../libs/util')
 
@@ -118,7 +119,25 @@ exports.myOrder = async (ctx, next) => {
   const { fromOpenid } = ctx.query
   const orders = await Order.fetchOrdersByFromOpenid(fromOpenid)
 
-  await ctx.render('myOrder', {
+  await ctx.render('myList', {
     orders
   })
+}
+
+exports.myCourse = async (ctx, next) => {
+  const {fromOpenid} = ctx.query
+  // find方法返回的是一个数组
+  const  student = await Student.find({fromOpenid}).populate('course')
+  let courses = []
+  // 通过这个微信用户报名的学员可能有多个
+  if (Array.isArray(student)) {
+    student.forEach((item) => {
+      courses = [...courses, ...item.course]
+    })
+  }
+
+  await ctx.render('myList', {
+    courses
+  })
+
 }
