@@ -1,4 +1,6 @@
+const mongoose = require('mongoose')
 const Student = require('../models/student')
+const ObjectId = mongoose.Types.ObjectId
 
 const fetchStudents = async (ctx) => {
   const campus = ctx.query.campus ? {campus: ctx.query.campus} : {}
@@ -49,7 +51,17 @@ const deleteStudent = async (ctx) => {
   }
 }
 
+const fetchStudentsByCourseId = async (ctx) => {
+  const {_id} = ctx.request.query
+  const students = await Student.find({course: `${_id}`}).populate('course').populate('order').exec()
+  ctx.body = {
+    code: 0,
+    students
+  }
+}
+
 module.exports = {
   fetchStudents,
-  deleteStudent
+  deleteStudent,
+  fetchStudentsByCourseId
 }
