@@ -10,6 +10,10 @@ const AuditionSchema = new Schema({
   course: {
     type: Schema.Types.ObjectId,
     ref: 'Course'
+  },
+  createAt: {
+    type: Date,
+    default: Date.now()
   }
 })
 

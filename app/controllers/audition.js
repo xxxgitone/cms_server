@@ -18,3 +18,11 @@ exports.addAudition = async (ctx) => {
     audition
   }
 }
+
+exports.fetchAudition = async (ctx) => {
+  const auditions = await Audition.find().populate('course').exec()
+  ctx.body = {
+    code: 0,
+    auditions
+  }
+}
