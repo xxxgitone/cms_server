@@ -26,3 +26,12 @@ exports.fetchAudition = async (ctx) => {
     auditions
   }
 }
+
+exports.fetchAuditionsByCourseId = async (ctx) => {
+  const {_id} = ctx.request.query
+  const auditions = await Audition.find({course: _id}).populate('course').exec()
+  ctx.body = {
+    code: 0,
+    auditions
+  }
+}
