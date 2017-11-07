@@ -9,6 +9,7 @@ const WechatUser = require('../models/wechatUser')
 const Comment = require('../models/comment')
 const Order = require('../models/order')
 const Student = require('../models/student')
+const Audition = require('../models/audition')
 const jwt = require('jsonwebtoken')
 const util = require('../../libs/util')
 
@@ -18,7 +19,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://46d2ce33.ngrok.io/index'
+  const redirect = 'http://b5b58d57.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
@@ -136,12 +137,22 @@ exports.myCourse = async (ctx, next) => {
     })
   }
 
-  console.log(courses)
-
   await ctx.render('myList', {
     // 使用用一个文件，避免渲染出错
     orders: '',
     courses
   })
 
+}
+
+exports.myAudition = async (ctx, next) => {
+  const {fromOpenid} = ctx.query
+  const auditions = await Audition.find({fromOpenid}).populate('course').exec()
+
+  console.log(auditions)
+  await ctx.render('myList', {
+    orders: '',
+    courses: '',
+    auditions
+  })
 }

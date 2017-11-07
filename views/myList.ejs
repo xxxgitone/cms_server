@@ -8,6 +8,8 @@
     <span>我的订单</span>
   <% } else if (courses) {%>
     <span>我的课程</span>
+  <%　} else if (auditons) {%>
+    <span>我的试听</span>
   <%　}　%>
 </div>
 
@@ -41,6 +43,21 @@
           </a>
         </div>
         <span><%= courses[i].campus %></span>
+      </li>
+    <% }%>
+  <% } else if (auditions) { %>
+    <% for (var i = 0; i < auditions.length; i++) {%>
+      <li class="order-item">
+        <div class="order-body">
+          <a href="/course/<%= auditions[i].course._id %>" class="order-link">
+            <img src="http://dummyimage.com/200x200/f2d479/b179f2&text=C">
+            <div class="order-info">
+              <span><%= auditions[i].course.courseName %></span>
+              <span class="price">￥<%= auditions[i].course.price %></span>
+            </div>
+          </a>
+        </div>
+        <span><%= auditions[i].course.campus %></span>
       </li>
     <% }%>
   <% } %>

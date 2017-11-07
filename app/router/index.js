@@ -23,6 +23,7 @@ router.get('/course/order/detail', wechat.orderDetail)
 router.get('/success', wechat.success)
 router.get('/myOrder', wechat.myOrder)
 router.get('/myCourse', wechat.myCourse)
+router.get('/myAudition', wechat.myAudition)
 
 // cms api
 router.use('/api', jwt(), userRoutes.routes())
