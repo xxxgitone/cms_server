@@ -6,6 +6,7 @@ exports.addAudition = async (ctx) => {
   const courseId = new mongoose.Types.ObjectId(form.courseId)
   const auditionInfo = {
     course: courseId,
+    fromOpenid: form.openid,
     studentName: form.studentName,
     phoneNumber: form.phoneNumber,
     birthday: form.birthday,

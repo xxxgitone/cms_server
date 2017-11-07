@@ -27,6 +27,7 @@ $(function () {
     var courseId = $('#courseId').val()
     var form = {
       token,
+      openid,
       courseId,
       studentName: $('#studentName').val(),
       phoneNumber: $('#phoneNumber').val(),

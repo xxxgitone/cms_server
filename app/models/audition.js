@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const AuditionSchema = new Schema({
   studentName: String,
+  fromOpenid: String,
   phoneNumber: String,
   birthday: String,
   parentName: String,
