@@ -3,9 +3,12 @@ $(function() {
   var $tab_panels = $('.weui-tab__panel .tab-item')
   var $tabbar_item = $('.weui-tabbar a')
   var lastIndex = 0
+  var lastTagIndex = 0
+  var link = 'formal'
   $('.weui-tabbar a').on('tap', function() {
     var index = $(this).index()
-    var link = $(this).data('link')
+    link = $(this).data('link')
+    lastTagIndex = 0
     if (index !== lastIndex) {
       $($tabbar_item[lastIndex]).removeClass('weui-bar__item_on')
       $($tab_panels[lastIndex]).css('display', 'none')
@@ -13,6 +16,8 @@ $(function() {
       $($tab_panels[index]).css('display', 'block')
       lastIndex = index
     }
+
+    $('.tags-list.' + link).on('tap', 'li', getCourseByTag)
 
     if (link === 'formal' || link === 'audition') {
       var url = '/api/courses?token=' + token + '&courseType=' + link
@@ -42,6 +47,24 @@ $(function() {
       $('.weui-panel__bd.' + el).html(html)
     })
   }
+
+  function getCourseByTag () {
+    var index = $(this).index()
+    var tag
+    if (index !== lastTagIndex) {
+      $(this).addClass('active')
+      $('.tags-list.' + link + ' li').eq(lastTagIndex).removeClass('active')
+      tag = $(this).text()
+      if (tag === '全部') {
+        tag = ''
+      }
+      lastTagIndex = index
+      var url = '/api/courses?token=' + token + '&courseType=' + link + '&tag=' + tag
+      getData(url, link)
+    }
+  }
+
+  $('.tags-list.' + link).on('tap', 'li', getCourseByTag)
   
   $.get('/api/wechatuser?token=' + token, function (data) {
     const user = data.user

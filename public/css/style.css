@@ -1,10 +1,15 @@
 html, body {
   min-height: 100%;
   box-sizing: border-box;
+  background: #F9FAFC;
 }
 
 *, *::before, *::after {
   box-sizing: inherit;
+}
+
+li {
+  list-style: none;
 }
 
 .weui-tab.index {
@@ -14,6 +19,29 @@ html, body {
 .weui-tab.courseDetail {
   margin-bottom: 45px;
   min-height: calc(100% - 44px);
+}
+
+/* index */
+.head-bg {
+  background: url('/images/head-bg.jpg');
+  padding: 20px 14px 12px 14px;
+}
+
+.tags-list {
+  display: flex;
+  color: rgba(255, 255, 255, .6);
+  flex-wrap: wrap;
+}
+
+.tags-list li {
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, .4);
+  margin: 0 10px 10px 0;
+  border-radius: 16px;
+}
+
+.tags-list li.active {
+  background: red;
 }
 
 /* course detail */
@@ -140,3 +168,80 @@ html, body {
 }
 
 /* order detail */
+
+
+/* my order */
+.header {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, .1);
+  background: #ffffff;
+}
+
+.header .back {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.header .back img {
+  height: 60%;
+}
+
+.header span {
+  color: #666;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+}
+
+.order-list {
+  color: #999;
+  padding: 0 8px;
+}
+
+.order-item{
+  margin-top: 10px;
+  background: #ffffff;
+}
+
+.order-item .orderNum {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-item .order-body {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-item .price {
+  display: inline-block;
+  padding: 4px 0;
+}
+
+.order-item .order-link {
+  display: flex;
+  width: 100%;
+  color: #999;
+}
+
+.order-item .order-link img {
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
+}
+
+.order-item .order-info {
+  flex: 1;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  color: red;
+}

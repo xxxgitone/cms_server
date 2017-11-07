@@ -4,28 +4,32 @@
 <div class="weui-tab index">
   <div class="weui-tab__panel">
     <div style="display:block" class="tab-item">
+        <div class="head-bg">
+            <ul class="tags-list formal">
+                <li class="active">全部</li>
+                <% for (var i = 0; i < tags.length; i++) { %>
+                    <li><%= tags[i] %></li>
+                <% } %>
+            </ul>
+        </div>
         <div class="weui-panel weui-panel_access">
             <div class="weui-panel__hd">正式课程列表</div>
             <div class="weui-panel__bd formal">
             </div>
-            <div class="weui-panel__ft">
-                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-                    <div class="weui-cell__bd">查看更多</div>
-                    <span class="weui-cell__ft"></span>
-                </a>    
-            </div>
         </div>
     </div>
     <div style="display:none" class="tab-item">
+        <div class="head-bg">
+            <ul class="tags-list audition">
+                <li class="active">全部</li>
+                <% for (var i = 0; i < tags.length; i++) { %>
+                    <li><%= tags[i] %></li>
+                <% } %>
+            </ul>
+        </div>
         <div class="weui-panel weui-panel_access">
             <div class="weui-panel__hd">试听课程列表</div>
             <div class="weui-panel__bd audition">
-            </div>
-            <div class="weui-panel__ft">
-                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-                    <div class="weui-cell__bd">查看更多</div>
-                    <span class="weui-cell__ft"></span>
-                </a>    
             </div>
         </div>
     </div>

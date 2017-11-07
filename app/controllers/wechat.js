@@ -58,8 +58,11 @@ exports.index = async (ctx, next) => {
     ctx.state.userId = ''
   }
 
+  const tags = await Course.distinct('tag')
+
   await ctx.render('index', {
-    title: '首页'
+    title: '首页',
+    tags
   })
 }
 
