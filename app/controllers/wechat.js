@@ -19,7 +19,7 @@ exports.hear = async (ctx, next) => {
 }
 
 exports.oauth = async (ctx, next) => {
-  const redirect = 'http://b5b58d57.ngrok.io/index'
+  const redirect = 'http://ae8c5f81.ngrok.io/index'
   const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wx.wechatOptions.wechat.appID}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
 
   ctx.redirect(url)
@@ -58,11 +58,13 @@ exports.index = async (ctx, next) => {
     ctx.state.userId = ''
   }
 
-  const tags = await Course.distinct('tag')
+  const f_tags = await Course.find({courseType: 'formal'}).distinct('tag')
+  const a_tags = await Course.find({courseType: 'audition'}).distinct('tag')
 
   await ctx.render('index', {
     title: '首页',
-    tags
+    f_tags,
+    a_tags
   })
 }
 
