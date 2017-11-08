@@ -17,7 +17,10 @@
   <% if (orders) {%>
     <% for (var i = 0; i < orders.length; i++) {%>
       <li class="order-item">
-        <div class="orderNum">订单编号: <%= orders[i].orderNo%></div>
+        <div class="orderNum" style="display: flex; justify-content: space-between;align-items: flex-end;padding-right: 4px;">
+          <span>订单编号: <%= orders[i].orderNo%></span>
+          <span style="font-size: 12px;"><%= orders[i].campus %></span>
+        </div>
         <div class="order-body">
           <a href="/course/<%= orders[i].course._id %>" class="order-link">
             <img src="http://dummyimage.com/200x200/f2d479/b179f2&text=C">
@@ -27,7 +30,10 @@
             </div>
           </a>
         </div>
-        <span>总价: <span class="price">￥<%= orders[i].course.price %></span></span>
+        <div style="display: flex; justify-content: space-between;align-items: flex-end;padding-right: 4px;">
+          <span>总价: <span class="price">￥<%= orders[i].course.price %></span></span>
+          <span><%= orders[i].date %></span>
+        </div>
       </li>
     <% }%>
   <% } else if (courses) { %>

@@ -50,7 +50,8 @@ const addOrder = async (ctx) => {
     arrears: 0,
     closed: false,
     gender: form.gender,
-    birthday: form.birthday
+    birthday: form.birthday,
+    applyDate: Date.now()
   })
 
   const studentInfo = await student.save()
@@ -70,7 +71,8 @@ const addOrder = async (ctx) => {
     revenue: form.revenue || courseInfo.price,
     payment: form.payment,
     handleCampus: form.handleCampus || '网络',
-    handlePeople: form.handlePeople || '网络'
+    handlePeople: form.handlePeople || '网络',
+    date: Date.now()
   })
 
   const orderInfo = await order.save()

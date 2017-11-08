@@ -127,6 +127,9 @@ exports.success = async(ctx, next) => {
 exports.myOrder = async (ctx, next) => {
   const { fromOpenid } = ctx.query
   const orders = await Order.fetchOrdersByFromOpenid(fromOpenid)
+  orders.forEach(order => {
+    order.createAt = util.formatDate(order.date)
+  })
 
   await ctx.render('myList', {
     orders
