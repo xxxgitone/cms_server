@@ -20,3 +20,20 @@ function timeAgo (timestamp) {
 
   return timeAgo
 }
+
+function _pad (num, n = 2) {
+  let len = num.toString().length
+  while (len < n) {
+    num = '0' + num
+    len--
+  }
+  return num
+}
+
+function formatDate (timestamp) {
+  timestamp = new Date(timestamp)
+  const year = timestamp.getFullYear()
+  const month = _pad(timestamp.getMonth()+1)
+  const day = _pad(timestamp.getDate())
+  return `${year}年${month}月${day}日`
+}
