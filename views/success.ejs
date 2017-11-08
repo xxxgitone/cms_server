@@ -2,11 +2,29 @@
 
   <div style="display:flex; justify-content:center;align-items:center;height:100%;flex-direction: column;">
     <i class="weui-icon-success weui-icon_msg"></i>
-    <span style="font-size:24px;color:#09B907;">报名成功</span>
+    <% if (type === 'formal') {%>
+      <span style="font-size:24px;color:#09B907;">报名成功</span>
+    <% } else if (type === 'audition') {%>
+      <span style="font-size:24px;color:#09B907;">预约成功</span>
+    <% } %>
     <div>
       <a href="/index" class="weui-btn weui-btn_mini weui-btn_primary">返回课程首页</a>
-      <a href="#" class="weui-btn weui-btn_mini weui-btn_primary">查看订单信息</a>
+
+      <% if (type === 'formal') {%>
+        <a href="#" class="weui-btn weui-btn_mini weui-btn_primary check-info" data-href="myOrder">查看订单信息</a>
+      <% } else if (type === 'audition') {%>
+        <a href="#" class="weui-btn weui-btn_mini weui-btn_primary check-info" data-href="myAudition">查看预约信息</a>
+      <% } %>
     </div>
   </div>
 
+  <script>
+    $('.check-info').on('tap', function (e) {
+      e.preventDefault()
+      var href = $(this).data('href')
+      var fromOpenid = localStorage.getItem('openid')
+      window.location.href = '/' + href + '?fromOpenid=' + fromOpenid
+    })
+  </script>
+  
 <%- include('./layouts/footer') %>

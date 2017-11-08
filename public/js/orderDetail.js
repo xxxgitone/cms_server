@@ -15,10 +15,9 @@ $(function () {
       parentName: $('#parentName').val(),
       gender: $("input[name='gender']:checked").val()
     }
-    console.log(form)
     $.post('/api/orders', form, function (data) {
       if (data.code === 0) {
-        window.location.href = '/success'
+        window.location.href = '/success?type=formal'
       }
     })
   })
@@ -36,7 +35,9 @@ $(function () {
       gender: $("input[name='gender']:checked").val()
     }
     $.post('/api/audition', form, function (data) {
-      console.log(data)
+      if (data.code === 0) {
+        window.location.href = '/success?type=audition'
+      }
     })
   })
 })

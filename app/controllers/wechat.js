@@ -118,7 +118,10 @@ exports.orderDetail = async (ctx, next) => {
 }
 
 exports.success = async(ctx, next) => {
-  await ctx.render('success')
+  const {type} = ctx.request.query
+  await ctx.render('success', {
+    type
+  })
 }
 
 exports.myOrder = async (ctx, next) => {
