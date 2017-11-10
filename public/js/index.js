@@ -1,13 +1,14 @@
 $(function() {
   var token = localStorage.getItem('wechat-token')
+  var link = localStorage.getItem('link') || 'formal'
   var $tab_panels = $('.weui-tab__panel .tab-item')
   var $tabbar_item = $('.weui-tabbar a')
   var lastIndex = 0
   var lastTagIndex = 0
-  var link = 'formal'
   $('.weui-tabbar a').on('tap', function() {
     var index = $(this).index()
     link = $(this).data('link')
+    localStorage.setItem('link', link)
     lastTagIndex = 0
     if (index !== lastIndex) {
       $($tabbar_item[lastIndex]).removeClass('weui-bar__item_on')
