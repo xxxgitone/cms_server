@@ -1,8 +1,8 @@
 <div class="weui-search-bar" id="searchBar">
-    <form class="weui-search-bar__form">
+    <form class="weui-search-bar__form" id="searchForm">
         <div class="weui-search-bar__box">
             <i class="weui-icon-search"></i>
-            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" />
+            <input type="search" name="courseName" class="weui-search-bar__input" id="searchInput" placeholder="搜索" />
             <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
         </div>
         <label for="search_input" class="weui-search-bar__label" id="searchText">
@@ -15,18 +15,17 @@
 <script>
     $(function(){
         var $searchBar = $('#searchBar'),
-            // $searchResult = $('#searchResult'),
             $searchText = $('#searchText'),
             $searchInput = $('#searchInput'),
             $searchClear = $('#searchClear'),
-            $searchCancel = $('#searchCancel')
+            $searchCancel = $('#searchCancel'),
+            $searchForm = $('#searchForm')
 
         function hideSearchResult(){
-            // $searchResult.hide()
             $searchInput.val('')
         }
+
         function cancelSearch(){
-            // hideSearchResult()
             $searchBar.removeClass('weui-search-bar_focusing')
             $searchText.show()
         }
@@ -34,22 +33,24 @@
         $searchText.on('click', function(){
             $searchBar.addClass('weui-search-bar_focusing')
             $searchInput.focus()
-        });
+        })
+
+        $searchForm.on('submit', function (e) {
+            e.preventDefault()
+            var courseName = $('input[name="courseName"]').val()
+            window.location.href = '/search?courseName=' + courseName
+            $('input[name="courseName"]').val('')
+        })
+
         $searchInput
             .on('blur', function () {
                 if(!this.value.length) cancelSearch()
             })
-            .on('input', function(){
-                if(this.value.length) {
-                    $searchResult.show()
-                } else {
-                    $searchResult.hide()
-                }
-            })
+
         $searchClear.on('click', function(){
-            // hideSearchResult()
             $searchInput.focus()
         })
+
         $searchCancel.on('click', function(){
             cancelSearch()
             $searchInput.blur()

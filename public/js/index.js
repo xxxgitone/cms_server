@@ -1,6 +1,6 @@
 $(function() {
   var token = localStorage.getItem('wechat-token')
-  var link = localStorage.getItem('link') || 'formal'
+  var link = 'formal'
   var $tab_panels = $('.weui-tab__panel .tab-item')
   var $tabbar_item = $('.weui-tabbar a')
   var lastIndex = 0
