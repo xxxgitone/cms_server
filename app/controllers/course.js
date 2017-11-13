@@ -28,6 +28,15 @@ const fetchCourse = async (ctx) => {
   }
 }
 
+const fetchCourseByType = async (ctx) => {
+  const {courseType} = ctx.query
+  const course = await Course.fetchCourseByType(courseType)
+  ctx.body = {
+    code: 0,
+    course
+  }
+}
+
 const fetchCourseById = async (ctx) => {
   const _id = ctx.query._id
   const course = await Course.findOne({_id: _id})
@@ -71,6 +80,7 @@ const deleteCourse = async (ctx) => {
 
 module.exports = {
   fetchCourse,
+  fetchCourseByType,
   fetchCourseById,
   addCourse,
   updateCourse,

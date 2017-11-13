@@ -3,6 +3,8 @@ const course = require('../controllers/course')
 
 router.get('/courses', course.fetchCourse)
 
+router.get('/getCourseByType', course.fetchCourseByType)
+
 router.get('/course', course.fetchCourseById)
 
 router.post('/courses', course.addCourse)
