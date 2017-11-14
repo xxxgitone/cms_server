@@ -6,7 +6,7 @@ exports.addAudition = async (ctx) => {
   const courseId = new mongoose.Types.ObjectId(form.courseId)
   const auditionInfo = {
     course: courseId,
-    fromOpenid: form.openid,
+    fromOpenid: form.openid || '',
     studentName: form.studentName,
     phoneNumber: form.phoneNumber,
     birthday: form.birthday,
@@ -21,7 +21,7 @@ exports.addAudition = async (ctx) => {
 }
 
 exports.fetchAudition = async (ctx) => {
-  const auditions = await Audition.find().populate('course').exec()
+  const auditions = await Audition.find().sort({createAt: -1}).populate('course').exec()
   ctx.body = {
     code: 0,
     auditions
@@ -30,7 +30,7 @@ exports.fetchAudition = async (ctx) => {
 
 exports.fetchAuditionsByCourseId = async (ctx) => {
   const {_id} = ctx.request.query
-  const auditions = await Audition.find({course: _id}).populate('course').exec()
+  const auditions = await Audition.find({course: _id}).sort({createAt: -1}).populate('course').exec()
   ctx.body = {
     code: 0,
     auditions

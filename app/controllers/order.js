@@ -37,9 +37,8 @@ const addOrder = async (ctx) => {
   const form = ctx.request.body
   const courseId = new mongoose.Types.ObjectId(form.courseId)
   const courseInfo = await Course.findById({_id: courseId})
-  console.log(courseInfo)
   const student = new Student({
-    fromOpenid: form.openid,
+    fromOpenid: form.openid || '',
     studentName: form.studentName,
     phoneNumber: form.phoneNumber,
     parentName: form.parentName,
@@ -57,10 +56,9 @@ const addOrder = async (ctx) => {
   const studentInfo = await student.save()
   const orderNo = await OrderNo
     .findOneAndUpdate({name: 'orderNo'}, {$inc: {id: 1}}, {new:true})
-  console.log(orderNo)
 
   const order = new Order({
-    fromOpenid: form.openid,
+    fromOpenid: form.openid || '',
     orderNo: orderNo.id,
     campus: courseInfo.campus,
     course: courseId,
@@ -78,7 +76,6 @@ const addOrder = async (ctx) => {
   const orderInfo = await order.save()
 
   const data = await Student.findByIdAndUpdate({_id: studentInfo._id}, {$push: {order: orderInfo._id}})
-  console.log(data)
   
   ctx.body = {
     code: 0,
