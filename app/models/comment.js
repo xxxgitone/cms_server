@@ -31,7 +31,11 @@ const CommentSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  type: String
+  type: String,
+  isRead: {
+    type: Boolean,
+    default: false
+  }
 })
 
 CommentSchema.static('fetchCommentsByCourseId', function(id, type, cb) {
@@ -41,6 +45,15 @@ CommentSchema.static('fetchCommentsByCourseId', function(id, type, cb) {
     .populate('course')
     .populate('from')
     .populate('reply.from')
+    .exec(cb)
+})
+
+CommentSchema.static('fetchCommentsByType', function (type, cb) {
+  return this
+    .find({type: type})
+    .sort({createAt: -1})
+    .populate('course')
+    .populate('from')
     .exec(cb)
 })
 

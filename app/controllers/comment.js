@@ -5,7 +5,14 @@ const ObjectId = mongoose.Types.ObjectId
 exports.fetchComments = async (ctx) => {
   const courseId = ctx.query.courseId || ''
   const type = ctx.query.type || ''
-  const comments = await Comment.fetchCommentsByCourseId(courseId, type)
+  let comments
+  if (courseId) {
+    comments = await Comment.fetchCommentsByCourseId(courseId, type)
+  } else {
+    data = await Comment.fetchCommentsByType(type)
+    comments = data.filter(item => !item.isRead)
+  }
+  
   ctx.body = {
     code: 0,
     comments
@@ -33,7 +40,8 @@ exports.addComment = async (ctx) => {
       from,
       content: body.content,
       type: body.type,
-      createAt: Date.now()
+      createAt: Date.now(),
+      isRead: false
     })
     data = await comment.save()
   }
