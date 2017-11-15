@@ -55,3 +55,12 @@ exports.addComment = async (ctx) => {
     comment: res
   }
 }
+
+exports.updateIsRead = async (ctx) => {
+  const {courseId} = ctx.request.body
+  const data = await Comment.updateMany({course: courseId, isRead: false}, {isRead: true})
+  ctx.body = {
+    code: 0,
+    data
+  }
+}
