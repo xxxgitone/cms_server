@@ -34,13 +34,22 @@ const addTask = async (ctx) => {
   }
 
   const data = await task.save()
-  console.log(data)
   ctx.body = {
     code: 0,
     task: data
   }
 }
 
+const fetchTasks = async (ctx) => {
+  const query = ctx.request.query
+  const data = await Task.find(query).sort({createAt: -1}).populate('user')
+  ctx.body = {
+    code: 0,
+    tasks: data
+  }
+}
+
 module.exports = {
-  addTask
+  addTask,
+  fetchTasks
 }
