@@ -57,3 +57,25 @@ exports.formatDate = (timestamp) => {
   const day = _pad(timestamp.getDate())
   return `${year}年${month}月${day}日`
 }
+
+// 获取本月第一天
+exports.getCurrentMonthFirst = () => {
+  const date = new Date()
+  date.setDate(1)
+  return date
+}
+
+exports.getCurrentMonthLast = () => {
+  const date = new Date()
+  let currentMonth = date.getMonth()
+  let nextMonth = currentMonth + 1
+  let nextMonthFirst
+  if (nextMonth <= 11) {
+    nextMonthFirst = new Date(date.getFullYear(), nextMonth, 1)
+  } else {
+    nextMonth = 0
+    nextMonthFirst = new Date(date.getFullYear() + 1, nextMonth, 1)
+  }
+  const oneDay = 1000 * 60 * 60 * 24
+  return new Date(nextMonthFirst - oneDay)
+}
