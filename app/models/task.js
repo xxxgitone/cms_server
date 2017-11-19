@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
 const TaskSchema = new Schema({
-  author: {
+  user: {
     type: ObjectId,
     ref: 'User'
   },
@@ -22,6 +22,7 @@ const TaskSchema = new Schema({
   },
   performance: Number,
   endDate: Date,
+  content: '',
   // 任务类型：`performance(业绩)`和`ordinary(普通)`
   type: String,
   campus: String
