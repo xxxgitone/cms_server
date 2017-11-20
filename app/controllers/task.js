@@ -49,7 +49,19 @@ const fetchTasks = async (ctx) => {
   }
 }
 
+const updateTask = async (ctx) => {
+  const body = ctx.request.body
+  const data = await Task.update({_id: body._id}, body)
+  if (data.n) {
+    ctx.body = {
+      code: 0,
+      msg: '成功'
+    }
+  }
+}
+
 module.exports = {
   addTask,
-  fetchTasks
+  fetchTasks,
+  updateTask
 }
