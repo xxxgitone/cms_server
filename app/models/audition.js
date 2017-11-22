@@ -18,5 +18,13 @@ const AuditionSchema = new Schema({
   }
 })
 
+AuditionSchema.static('fetchAuditionByFromOpenid', function (id, cb) {
+  return this
+    .find({fromOpenid: id})
+    .sort({date: -1})
+    .populate('course')
+    .exec(cb)
+})
+
 const Audition = mongoose.model('Audition', AuditionSchema)
 module.exports = Audition

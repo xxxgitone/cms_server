@@ -1,6 +1,12 @@
 const path = require('path')
 const wx = require('./index')
 const wechatApi = wx.getWechat()
+const util = require('../libs/util')
+const Course = require('../app/models/course')
+const Order = require('../app/models/order')
+const Student = require('../app/models/student')
+const Audition = require('../app/models/audition')
+
 
 /**
  * 根据用户的请求信息，返回相应的内容
@@ -12,171 +18,91 @@ exports.reply = async (ctx, next) => {
       if (message.EventKey) {
         console.log('扫毛二维码: ' + message.EventKey + ' ' + message.Ticket)
       }
-      ctx.body = '欢迎订阅～'
+      ctx.body = `欢迎订阅～\n\n回复关键字“报名”、“试听”、“课程”可以快速查看相关信息\n`
     } else if (message.Event === 'unsubscribe') {
       ctx.body= ''
       console.log('取消关注')
-    } else if (message.Event === 'LOCATION') {
-      ctx.bdy = `您上报的位置是: ${message.Latitude}/${message.Longitude}-${message.Precision}`
     } else if (message.Event === 'CLICK') {
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-    } else if (message.Event === 'SCAN') {
-      console.log(`关注后扫二维码${message.EventKey} ${message.Ticket}`)
-      ctx.body = '看到你扫了一下哦'
-    } else if (message.Event === 'VIEW') {
-      ctx.body = `您点击的链接: ${message.EventKey}`
-    } else if (message.Event === 'scancode_push') {
-      console.log(message.ScanCodeInfo.ScanType)
-      console.log(message.ScanResult)
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-    } else if (message.Event === 'scancode_waitmsg') {
-      console.log(message.ScanCodeInfo.ScanType)
-      console.log(message.ScanResult.ScanResult)
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-    } else if (message.Event === 'pic_sysphoto') {
-      console.log(message.SendPicsInfo.PicList)
-      console.log(message.SendPicsInfo.Count)
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-    } else if (message.Event === 'pic_photo_or_album') {
-      console.log(message.SendPicsInfo.PicList)
-      console.log(message.SendPicsInfo.Count)
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-    } else if (message.Event === 'pic_weixin') {
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-      console.log(message.SendPicsInfo.PicList)
-      console.log(message.SendPicsInfo.Count)
-    } else if (message.Event === 'location_select') {
-      ctx.body = `您点击了菜单: ${message.EventKey}`
-      console.log(message.SendLocationInfo.Location_X)
-      console.log(message.SendLocationInfo.Location_Y)
-      console.log(message.SendLocationInfo.Scale)
-      console.log(message.SendLocationInfo.Label)
-      console.log(message.SendLocationInfo.Poiname)
-    } 
+      const fromOpenid = message.FromUserName
+      const eventKey = message.EventKey
+      let data = []
+      let headStr = ''
+      let replys = []
+      if (message.EventKey === 'myOrder') {
+        data = await Order.fetchOrdersByFromOpenid(fromOpenid)
+        if (data.length > 0) {
+          headStr = '您的订单信息如下\n\n'
+          data.forEach(item => {
+            const date = util.formatDate(item.date)
+            let str = `订单编号：${item.orderNo}\n校区：${item.campus}\n课程名：${item.course.courseName}\n评分：${item.rate}价格：${item.price}\n学生名：${item.student.studentName}\n日期：${date}\n\n`
+            replys.push(str)
+          })
+        } else {
+          headStr = '暂无订单信息'
+        }
+      } else if (eventKey === 'myCourse') {
+        const  student = await Student.find({fromOpenid}).populate('course')
+        // 通过这个微信用户报名的学员可能有多个
+        if (Array.isArray(student)) {
+          student.forEach((item) => {
+            data = [...data, ...item.course]
+          })
+        }
+        if (data.length > 0) {
+          headStr = '您的课程信息如下\n\n'
+          data.forEach(item => {
+            const date = util.formatDate(item.startDate)
+            let str = `课程名：${item.courseName}\n校区：${item.campus}\n教师：${item.teacher}\n价格：${item.price}\n课时：${item.period}/课时\n开始日期：${date}\n\n`
+            replys.push(str)
+          })
+        } else {
+          headStr = '暂无课程信息'
+        }
+      } else if (eventKey === 'myAudition') {
+        data = await Audition.fetchAuditionByFromOpenid(fromOpenid)
+        if (data.length > 0) {
+          headStr = '您的试听信息如下\n\n'
+          data.forEach(item => {
+            const date = util.formatDate(item.createAt)
+            let str = `课程名：${item.course.courseName}\n校区：${item.course.campus}\n教师：${item.course.teacher}\n学生名：${item.studentName}\n日期：${date}\n\n`
+            replys.push(str)
+            replys.push(str)
+          })
+        } else {
+          headStr = '暂无试听信息'
+        }
+      }
+      ctx.body = `${headStr}${replys.join('')}`
+    }
   } else if (message.MsgType === 'text'){
     const content = message.Content
-    let reply = `您的话是: ${message.Content}`
-
-    if (content === '1') {
-      reply = '1'
-    } else if (content === '2') {
-      reply = '2'
-    } else if (content === '3') {
-      reply = '3'
-    } else if (content === '4') {
-      reply = [{
-        Title: 'github',
-        Description: '最大的同性交友网站',
-        PicUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505490329240&di=92852ad01eb3da50aa52aa3cb2de7d7c&imgtype=0&src=http%3A%2F%2Fwww.embeddedlinux.org.cn%2Fuploads%2Fallimg%2F151115%2F0934120.jpg',
-        Url: 'https://github.com/xxxgitone'
-      }]
-    } else if (content === '5') {
-      const data = await wechatApi.uploadMaterial('image', path.join(__dirname, '../2.jpg'))
-      reply = {
-        type: 'image',
-        Media_id: data.media_id
-      }
-    } else if (content === '6') {
-      const data = await wechatApi.uploadMaterial('image', path.join(__dirname, '../2.jpg'), {type: 'image'})
-      console.log(data)
-      reply = {
-        type: 'image',
-        Media_id: data.media_id
-      }
-    } else if (content === '7') {
-      const picData = await wechatApi.uploadMaterial('image', path.join( __dirname, '../2.jpg'), {})
-      console.log(picData)
-
-      let media = {
-        articles: [{
-          title: 'GITHUB',
-          thumb_media_id: picData.media_id,
-          author: 'xuthus',
-          digest: '简单摘要',
-          show_cover_pic: 1,
-          content: '全球最大的同性交友网站',
-          content_source_url: 'https://github.com/xxxgitone'
-        },{
-          title: 'GITHUB1',
-          thumb_media_id: picData.media_id,
-          author: 'xuthus',
-          digest: '简单摘要',
-          show_cover_pic: 1,
-          content: '全球最大的同性交友网站',
-          content_source_url: 'https://github.com/xxxgitone'
-        }]
-      }
-      
-      data = await wechatApi.uploadMaterial('news', media, {})
-      console.log(data)
-      data = await wechatApi.fetchMaterial(data.media_id, 'news', {})
-      console.log(data)
-
-      const items = data.news_item
+    let course = []
+    let reply
+    if (content === '报名' || content === '课程' || content === '正式课程') {
+      course = await Course.fetchCourseByType('formal')
       let news = []
 
-      items.forEach((item) => {
+      course.slice(0,5).forEach((item) => {
         news.push({
-          Title: item.title,
-          Description: item.content,
-          PicUrl: picData.url,
-          Url: item.url
+          Title: item.courseName,
+          Description: item.introduction,
+          PicUrl: item.picUrl,
+          Url: `http://3dcec1da.ngrok.io/course/${item._id}`
         })
       })
       reply = news
-    } else if (content === '8') {
-      const counts = await wechatApi.countMaterial()
-      console.log(JSON.stringify(counts))
-
-      const list = await wechatApi.batchMaterial({
-        type: 'image',
-        offset: 0,
-        count: 10,
+    } else if (content === '试听' || content === '预约' || content === '试听预约' || content === '试听课程') {
+      course = await Course.fetchCourseByType('audition')
+      let news = []
+      course.slice(0,5).forEach((item) => {
+        news.push({
+          Title: item.courseName,
+          Description: item.introduction,
+          PicUrl: item.picUrl,
+          Url: `http://3dcec1da.ngrok.io/course/${item._id}`
+        })
       })
-      const list2 = await wechatApi.batchMaterial({
-        type: 'news',
-        offset: 0,
-        count: 10,
-      })
-      console.log(list)
-      console.log(list2)
-
-      reply = '素材'
-    } else if (content === '9') {
-      const tag = await wechatApi.createTags('wechat')
-      console.log('新分组')
-
-      const tags = await wechatApi.fetchTags()
-      console.log(tags)
-
-      reply = '分组'
-    } else if (content === '10') {
-      const user = await wechatApi.fetchUsers(message.FromUserName)
-      console.log(user)
-
-      const openIds = [
-        {
-          openid: message.FromUserName, 
-          lang: 'en'
-        }
-      ]
-
-      const users = await wechatApi.fetchUsers(openIds)
-
-      console.log(users)
-
-      reply = JSON.stringify(user)
-    } else if (content === '11') {
-      const userList = await wechatApi.listUsers()
-      console.log(userList)
-      reply = userList.total
-    } else if (content === '12') {
-      const mpnews = {
-        media_id: 'TM1UUnceeDG6AGP6pnrgEM9jxhvgu6VQCjkShMiNzIs'
-      }
-      const msgData = await wechatApi.sendByTag('mpnews', mpnews)
-      console.log(msgData)
-      reply = 'Yeah'
+      reply = news
     }
 
     ctx.body = reply
