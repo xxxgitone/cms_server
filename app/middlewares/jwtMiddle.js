@@ -14,12 +14,14 @@ module.exports = function () {
           ctx.decoded = decoded
           await next()
         } else {
+          console.log('token验证失败')
           ctx.body = {
             code: -1,
             msg: 'token验证失败'
           }
         }
       } else {
+        console.log('No token provide')
         ctx.body = {
           code: -1,
           msg: 'No token provided'
