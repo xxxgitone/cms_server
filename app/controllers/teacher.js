@@ -17,6 +17,15 @@ const fetchTeachers = async (ctx) => {
   }
 }
 
+const fetchCampusAllTeacher = async (ctx) => {
+  const campus = ctx.query.campus
+  const teachers = await Teacher.find({campus})
+  ctx.body = {
+    code: 0,
+    teachers
+  }
+}
+
 const fetchTeacherById = async (ctx) => {
   const _id = ctx.query._id
   const teacher = await Teacher.findOne({_id: _id})

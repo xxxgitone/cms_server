@@ -3,6 +3,8 @@ const teacher = require('../controllers/teacher')
 
 router.get('/teachers', teacher.fetchTeachers)
 
+router.get('/getAllTeachers', teacher.fetchTeachers)
+
 router.get('/teacher', teacher.fetchTeacherById)
 
 router.post('/teachers', teacher.addTeacher)
