@@ -3,7 +3,7 @@
   <input name="courseId" type="hidden" value="<%= courseInfo._id %>"/>
   <div class="course-info">
     <h4>课程信息</h4>
-    <img src="http://dummyimage.com/400x200/f2d479/b179f2&text=C" alt="">
+    <img src="<%= courseInfo.picUrl %>" alt="">
     <div class="course-mask">
       <h5><%= courseInfo.courseName %></h5>
       <p><%= courseInfo.period%>分钟/课时</p>
@@ -52,7 +52,7 @@
                     <% for (var j = 0; j < commentsFeedback[i].reply.length; j ++) { %>
                       <div class="comment-item">
                         <div class="comment-auth-avatar">
-                          <img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/15-01-128.png" />
+                          <img src="<%= commentsFeedback[i].reply[j].from.avatar %>" />
                         </div>
                         <div class="comment-content-info">
                           <span class="comment-nickname">
@@ -131,7 +131,7 @@
     </div>
   <% } else if (courseInfo.courseType === 'audition') {%>
     <div class="apply-panel">
-      <span class="price">￥0</span>
+      <span class="price">&nbsp;</span>
       <a href='/course/order/detail?courseId=<%= courseInfo._id %>' class="apply-button">立即预约</a>
     </div>
   <% } %>
