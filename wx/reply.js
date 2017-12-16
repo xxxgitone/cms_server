@@ -76,36 +76,20 @@ exports.reply = async (ctx, next) => {
     }
   } else if (message.MsgType === 'text'){
     const content = message.Content
-    let course = []
-    let reply
-    if (content === '报名' || content === '课程' || content === '正式课程') {
-      course = await Course.fetchCourseByType('formal')
-      let news = []
-
-      course.slice(0,5).forEach((item) => {
-        news.push({
-          Title: item.courseName,
-          Description: item.introduction,
-          PicUrl: item.picUrl,
-          Url: `http://3dcec1da.ngrok.io/course/${item._id}`
-        })
-      })
-      reply = news
-    } else if (content === '试听' || content === '预约' || content === '试听预约' || content === '试听课程') {
-      course = await Course.fetchCourseByType('audition')
-      let news = []
-      course.slice(0,5).forEach((item) => {
-        news.push({
-          Title: item.courseName,
-          Description: item.introduction,
-          PicUrl: item.picUrl,
-          Url: `http://3dcec1da.ngrok.io/course/${item._id}`
-        })
-      })
-      reply = news
+    let news = []
+    let course = await Course.fetchCourseByName(content)
+    if (course.length === 0) {
+      course = await Course.fetchCourseByTag(content)
     }
-
-    ctx.body = reply
+    course.forEach((item) => {
+      news.push({
+        Title: item.courseName,
+        Description: item.introduction,
+        PicUrl: item.picUrl,
+        Url: `http://5975479c.ngrok.io/course/${item._id}`
+      })
+    })
+    ctx.body = news.length > 0 ? news : '没有相关信息'
   }
   await next()
 }

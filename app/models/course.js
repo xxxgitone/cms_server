@@ -23,9 +23,15 @@ const CourseSchema = new Schema({
   }
 })
 
-CourseSchema.static('fetchCourseByType', function (type) {
+CourseSchema.static('fetchCourseByName', function (name) {
   return this
-    .find({courseType: type})
+    .find({courseName: {$regex: name, $options: 'g'}})
+    .exec()
+})
+
+CourseSchema.static('fetchCourseByTag', function (tag) {
+  return this
+    .find({tag: {$regex: tag, $options: 'g'}})
     .exec()
 })
 
