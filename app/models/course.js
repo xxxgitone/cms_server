@@ -17,6 +17,7 @@ const CourseSchema = new Schema({
   price: Number,
   picUrl: String,
   tag: String,
+  classTime: String,
   courseType: {
     type: String
   }

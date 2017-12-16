@@ -33,15 +33,26 @@ $(function() {
       var course = data.course
       console.log(course)
       var html = course.map(function (item) {
+        var price = Number(item.price) === 0 
+          ? `<span>试听</span>` 
+          : ` <span>￥${item.price}</span>
+              <span style="display: inline-block;width: 80%;text-align: right;">正式</span>` 
         return `
           <a href="course/${item._id}" class="weui-media-box weui-media-box_appmsg">
             <div class="weui-media-box__hd">
-              <img class="weui-media-box__thumb" src="http://dummyimage.com/200x200/f2d479/b179f2&text=C" alt="">
+              <img class="weui-media-box__thumb" src="${item.picUrl}">
             </div>
             <div class="weui-media-box__bd">
-              <h4 class="weui-media-box__title" style="display:flex;justify-content:space-between;">${item.courseName}<span style="font-size: 14px; color: #666;margin-right: 6px;">${item.campus}</span></h4>
+              <h4 class="weui-media-box__title" style="display:flex;justify-content:space-between;">
+                ${item.courseName}
+                <span style="font-size: 14px; color: #666;margin-right: 6px;">
+                  ${item.campus}
+                </span>
+              </h4>
               <p class="weui-media-box__desc">${item.introduction}</p>
-              <span style="color: red; font-size: 12px;">￥${item.price}</span>
+              <span style="color: red; font-size: 12px;">
+               ${price}
+              </span>
             </div>
           </a>
         `
