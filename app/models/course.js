@@ -35,5 +35,11 @@ CourseSchema.static('fetchCourseByTag', function (tag) {
     .exec()
 })
 
+CourseSchema.static('fetchCourseByType', function (type) {
+  return this
+    .find({courseType: type})
+    .exec()
+})
+
 const Course = mongoose.model('Course', CourseSchema)
 module.exports = Course

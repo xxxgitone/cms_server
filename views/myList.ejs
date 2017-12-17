@@ -14,7 +14,7 @@
 </div>
 
 <ul class="order-list">
-  <% if (orders) {%>
+  <% if (orders.length > 0) {%>
     <% for (var i = 0; i < orders.length; i++) {%>
       <li class="order-item">
         <div class="orderNum" style="display: flex; justify-content: space-between;align-items: flex-end;padding-right: 4px;">
@@ -36,7 +36,7 @@
         </div>
       </li>
     <% }%>
-  <% } else if (courses) { %>
+  <% } else if (courses.length > 0) { %>
     <% for (var i = 0; i < courses.length; i++) {%>
       <li class="order-item">
         <div class="order-body">
@@ -51,7 +51,7 @@
         <span><%= courses[i].campus %></span>
       </li>
     <% }%>
-  <% } else if (auditions) { %>
+  <% } else if (auditions.length > 0) { %>
     <% for (var i = 0; i < auditions.length; i++) {%>
       <li class="order-item">
         <div class="order-body">
