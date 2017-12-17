@@ -34,7 +34,7 @@ exports.reply = async (ctx, next) => {
           headStr = '您的订单信息如下\n\n'
           data.forEach(item => {
             const date = util.formatDate(item.date)
-            let str = `订单编号：${item.orderNo}\n校区：${item.campus}\n课程名：${item.course.courseName}\n评分：${item.rate}价格：${item.price}\n学生名：${item.student.studentName}\n日期：${date}\n\n`
+            let str = `订单编号：${item.orderNo}\n校区：${item.campus}\n课程名：${item.course.courseName}\n价格：${item.price}\n学生名：${item.student.studentName}\n日期：${date}\n\n`
             replys.push(str)
           })
         } else {
