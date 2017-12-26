@@ -80,7 +80,7 @@ const fetchTotalSalesByDate = async (ctx) => {
     }
   })
   const renewCount = todayRenew.length && todayRenew.reduce((prev, next) => {
-    return Number(Numberprev) + Number(next)
+    return Number(prev) + Number(next)
   })
   
   ctx.body = {
@@ -133,6 +133,16 @@ let WEEKDAY = {
   7: '星期日'  
 }
 
+function _indexOf (array, item) {
+  let result = -1
+  for (let i = 0, len = array.length; i < len; i++) {
+    if (array[i] && array[i].name === item) {
+      result = i
+    }
+  }
+  return result
+}
+
 const fetchTotalSalesByWeek = async (ctx) => {
   const week = util.getWeek()
   let weekdayTotalSales = []
@@ -141,13 +151,14 @@ const fetchTotalSalesByWeek = async (ctx) => {
     let totalSales = {}
     const day = new Date(order.date).getDay()
     const date = util.formatDate(order.date)
+    const index = _indexOf(weekdayTotalSales, order.campus)
     if (week[WEEKDAY[day]] === date) {
-      if (!totalSales[order.campus] || !totalSales.data) {
+      if (!totalSales[order.campus] && index === -1) {
         totalSales.name = order.campus
         totalSales.data = []
-        totalSales.data[day] = order.revenue
+        totalSales.data[day-1] = order.revenue
       } else {
-        totalSales.data[day] = order.revenue
+        weekdayTotalSales[index].data[day-1] = weekdayTotalSales[index].data[day-1] + order.revenue
       }
       weekdayTotalSales.push(totalSales)
     }
