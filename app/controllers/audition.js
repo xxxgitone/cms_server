@@ -1,5 +1,6 @@
 const Audition = require('../models/audition')
 const mongoose = require('mongoose')
+const util = require('../../libs/util')
 
 exports.addAudition = async (ctx) => {
   const form = ctx.request.body
@@ -25,6 +26,24 @@ exports.fetchAudition = async (ctx) => {
   ctx.body = {
     code: 0,
     auditions
+  }
+}
+
+exports.fetchAuditonsCountByDate = async (ctx) => {
+  const date = ctx.query.date
+  const campus = ctx.query.campus
+  const today = util.formatDate(date)
+  const auditions = await Audition.find({campus})
+  let todayAuditions = []
+  auditions.forEach(audition => {
+    const createDate = util.formatDate(audition.createAt)
+    if (today === createDate) {
+      todayAuditions.push(audition)
+    }
+  })
+  ctx.body = {
+    code: 0,
+    count: todayAuditions.length
   }
 }
 

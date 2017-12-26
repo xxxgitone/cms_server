@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Student = require('../models/student')
 const ObjectId = mongoose.Types.ObjectId
+const util = require('../../libs/util')
 
 const fetchStudents = async (ctx) => {
   const campus = ctx.query.campus ? {campus: ctx.query.campus} : {}
@@ -25,6 +26,24 @@ const fetchStudents = async (ctx) => {
     code: 0,
     total,
     students
+  }
+}
+
+const fetchStudentsByDate = async (ctx) => {
+  const date = ctx.query.date
+  const campus = ctx.query.campus
+  const today = util.formatDate(date)
+  const students = await Student.find({campus})
+  let todayStudents = []
+  students.forEach(student => {
+    const createDate = util.formatDate(student.applyDate)
+    if (today === createDate) {
+      todayStudents.push(student)
+    }
+  })
+  ctx.body = {
+    code: 0,
+    count: todayStudents.length
   }
 }
 
@@ -63,5 +82,6 @@ const fetchStudentsByCourseId = async (ctx) => {
 module.exports = {
   fetchStudents,
   deleteStudent,
+  fetchStudentsByDate,
   fetchStudentsByCourseId
 }
