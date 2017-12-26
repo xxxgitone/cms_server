@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-exports.readFileAsync = (fpath, encodnig) => {
+const readFileAsync = (fpath, encodnig) => {
   return new Promise((resolve, reject) => {
     fs.readFile(fpath, encodnig, (err, content) => {
       if (err) reject(err)
@@ -9,7 +9,7 @@ exports.readFileAsync = (fpath, encodnig) => {
   })
 }
 
-exports.writeFileAsync = (fpath, content) => {
+const writeFileAsync = (fpath, content) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(fpath, content, (err) => {
       if (err) reject(err)
@@ -19,7 +19,7 @@ exports.writeFileAsync = (fpath, content) => {
 }
 
 
-exports.timeAgo = (timestamp) => {
+const timeAgo = (timestamp) => {
   const nowTime = Date.now()
   const diff = nowTime - timestamp
   const int = parseInt
@@ -50,8 +50,8 @@ function _pad (num, n = 2) {
   return num
 }
 
-exports.formatDate = (timestamp) => {
-  timestamp = new Date(timestamp)
+const formatDate = (timestamp) => {
+  timestamp = new Date(Number(timestamp))
   const year = timestamp.getFullYear()
   const month = _pad(timestamp.getMonth()+1)
   const day = _pad(timestamp.getDate())
@@ -59,13 +59,13 @@ exports.formatDate = (timestamp) => {
 }
 
 // 获取本月第一天
-exports.getCurrentMonthFirst = () => {
+const getCurrentMonthFirst = () => {
   const date = new Date()
   date.setDate(1)
   return date
 }
 
-exports.getCurrentMonthLast = () => {
+const getCurrentMonthLast = () => {
   const date = new Date()
   let currentMonth = date.getMonth()
   let nextMonth = currentMonth + 1
@@ -78,4 +78,46 @@ exports.getCurrentMonthLast = () => {
   }
   const oneDay = 1000 * 60 * 60 * 24
   return new Date(nextMonthFirst - oneDay)
+}
+
+let WEEKDAY = {
+  1: '星期一',
+  2: '星期二',
+  3: '星期三',
+  4: '星期四',
+  5: '星期五',
+  6: '星期六',
+  7: '星期日'  
+}
+
+const getWeek = () => {
+  let week = {}
+  const day = new Date().getDay()
+  week[WEEKDAY[day]] = formatDate(+new Date())
+  
+  let n1 = 1
+  for (let i = day - 1; i >= 1; i--) {
+    let timestamp = 24 * 60 * 60 * 1000 * n1
+    week[WEEKDAY[i]] = formatDate(+new Date() - timestamp)
+    ++n1
+  }
+  
+  let n2 = 1
+  for (let j = day + 1; j <= 7; j++) {
+    let timestamp = 24 * 60 * 60 * 1000 * n2
+    week[WEEKDAY[j]] = formatDate(+new Date() + timestamp)
+    ++n2
+  }
+  return week
+}
+
+module.exports = {
+  formatDate,
+  readFileAsync,
+  writeFileAsync,
+  timeAgo,
+  formatDate,
+  getCurrentMonthFirst,
+  getCurrentMonthLast,
+  getWeek
 }
