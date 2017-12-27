@@ -61,6 +61,28 @@ $(function() {
     })
   }
 
+  $.get('/api/teachers?pagesize=20&token=' + token, function(data) {
+    const teachers = data.teachers
+    const htmls = teachers.map(function(item) {
+      return `
+        <li class="item">
+          <img src="${item.avatar}">
+          <div class="info">
+              <div>
+                  <span>${item.userName}</span>
+                  <span>${item.rank}</span>
+              </div>
+            <div>
+                  <span>${item.job}中国舞</span>
+                  <span>${item.campus}</span>
+            </div>
+          </div>
+        </li>
+      `
+    })
+    $('.teachers-list').html(htmls.join(''))
+  })
+
   function getCourseByTag () {
     var index = $(this).index()
     var tag
