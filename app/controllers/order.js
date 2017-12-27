@@ -151,16 +151,18 @@ const fetchTotalSalesByWeek = async (ctx) => {
     let totalSales = {}
     const day = new Date(order.date).getDay()
     const date = util.formatDate(order.date)
-    const index = _indexOf(weekdayTotalSales, order.campus)
     if (week[WEEKDAY[day]] === date) {
-      if (!totalSales[order.campus] && index === -1) {
+      const index = _indexOf(weekdayTotalSales, order.campus)
+      if (index === -1) {
         totalSales.name = order.campus
         totalSales.data = []
         totalSales.data[day-1] = order.revenue
+        weekdayTotalSales.push(totalSales)
       } else {
-        weekdayTotalSales[index].data[day-1] = weekdayTotalSales[index].data[day-1] + order.revenue
+        weekdayTotalSales[index].data[day -1] = weekdayTotalSales[index].data[day -1] 
+            ? weekdayTotalSales[index].data[day-1] + order.revenue 
+            : order.revenue
       }
-      weekdayTotalSales.push(totalSales)
     }
   })
   ctx.body = {
