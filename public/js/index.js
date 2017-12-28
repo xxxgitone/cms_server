@@ -73,7 +73,7 @@ $(function() {
                   <span>${item.rank}</span>
               </div>
             <div>
-                  <span>${item.job}中国舞</span>
+                  <span>${item.job}</span>
                   <span>${item.campus}</span>
             </div>
           </div>
