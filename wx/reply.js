@@ -18,7 +18,7 @@ exports.reply = async (ctx, next) => {
       if (message.EventKey) {
         console.log('扫毛二维码: ' + message.EventKey + ' ' + message.Ticket)
       }
-      ctx.body = `欢迎订阅～\n\n回复关键字“报名”、“试听”、“课程”可以快速查看相关信息\n`
+      ctx.body = `欢迎订阅～\n\n回复课程关键字，可以快速查看相关信息\n`
     } else if (message.Event === 'unsubscribe') {
       ctx.body= ''
       console.log('取消关注')
@@ -86,7 +86,7 @@ exports.reply = async (ctx, next) => {
         Title: item.courseName,
         Description: item.introduction,
         PicUrl: item.picUrl,
-        Url: `http://5975479c.ngrok.io/course/${item._id}`
+        Url: `https://cc4f67ad.ngrok.io/course/${item._id}`
       })
     })
     ctx.body = news.length > 0 ? news : '没有相关信息'

@@ -3,12 +3,12 @@ module.exports = {
     {
       type: 'view',
       name: '报名预约',
-      url: 'http://3dcec1da.ngrok.io/oauth'
+      url: 'https://82775cdc.ngrok.io/oauth'
     },
     {
       type: 'view',
       name: '教师风采',
-      url: 'http://3dcec1da.ngrok.io/oauth'
+      url: 'https://82775cdc.ngrok.io/oauth'
     },
     {
       name: '我的信息',
