@@ -1,9 +1,9 @@
 ### 项目启动
-1.安装 node，官网
+1.安装 node，官网
 
-2.安装 mongodb，这个自行 Google 吧。
+2.安装 mongodb，这个自行 Google 吧。
 
-3.进入 mongodb 终端命令，插入一条用户数据用于登录
+3.进入 mongodb 终端命令，插入一条用户数据用于登录
 
 ```bash
 use cms
@@ -11,7 +11,7 @@ use cms
 db.users.insert({ account: 'admin', password: 123456, role: 'admin' })
 ```
 
-4.新开一个终端，进入到项目目录，一定要在项目目录下执行
+4.新开一个终端，进入到项目目录，一定要在项目目录下执行
 
 ```bash
 npm install
